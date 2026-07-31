@@ -103,7 +103,7 @@ describe('resolveTestMocksConfig precedence', () => {
         expect(resolved.similarityThreshold).toBe(0.8);
         expect(resolved.out).toBe(path.join('reports', 'test-mock-usage', 'report.md'));
         expect(resolved.scanPaths).toEqual(['src']);
-        expect(resolved.ignoreDirectories).toEqual(['node_modules', 'dist', 'coverage']);
+        expect(resolved.ignoreDirectories).toEqual(['node_modules', 'dist', 'coverage', '.turbo']);
     });
 
     it('lets a config file override built-in defaults', () => {
@@ -155,7 +155,7 @@ describe('resolveTestMocksConfig precedence', () => {
             env: {},
         });
 
-        expect(resolved.ignoreDirectories).toEqual(['node_modules', 'dist', 'coverage', 'vendored']);
+        expect(resolved.ignoreDirectories).toEqual(['node_modules', 'dist', 'coverage', '.turbo', 'vendored']);
     });
 
     it('auto-detects scan paths from a pnpm workspace when none are configured', () => {

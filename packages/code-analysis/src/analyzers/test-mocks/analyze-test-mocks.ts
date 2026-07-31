@@ -429,7 +429,9 @@ export function analyzeTestMocks(options: AnalyzeTestMocksOptions): AnalyzeTestM
         },
     });
 
-    const sourceFiles = project.addSourceFilesAtPaths(testFiles);
+    // Prefer per-path add: `addSourceFilesAtPaths` treats `[brackets]` in absolute
+    // paths as glob character classes (ts-morph ≤25), dropping Next.js `[locale]` tests.
+    const sourceFiles = testFiles.map((filePath) => project.addSourceFileAtPath(filePath));
     const taggedOccurrences: (MockOccurrence & {
         factoryText: string | null;
         groupKey: string;

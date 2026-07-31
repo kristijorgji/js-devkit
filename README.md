@@ -86,6 +86,7 @@ js-devkit/
 │   └── code-analysis/     # @kristijorgji/code-analysis
 ├── docs/
 │   ├── rules/             # Per-rule docs (linked from RuleCreator URLs)
+│   ├── maintainer-release-setup.md  # One-time Actions + NPM_TOKEN checklist
 │   └── release-2-eslint-configs.md
 ├── .changeset/            # Changesets config + pending changesets
 ├── .github/workflows/     # CI + release

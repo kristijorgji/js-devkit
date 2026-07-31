@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-export const DEFAULT_IGNORE_DIRECTORIES = ['node_modules', 'dist', 'coverage'];
+export const DEFAULT_IGNORE_DIRECTORIES = ['node_modules', 'dist', 'coverage', '.turbo'];
 
 export function walkDirectory(
     directoryPath: string,

@@ -63,6 +63,8 @@ Nothing publishes on the first merge. The version PR is the review gate; merging
 - [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — build, test, lint, changeset status, plugin peer matrix (`eslint@9+ts5` / `eslint@10+ts6`)
 - [`.github/workflows/release.yml`](.github/workflows/release.yml) — Changesets action on push to `main`
 
+Maintainer one-time repo setup (Actions “create and approve PRs” toggle, `NPM_TOKEN`, provenance): [docs/maintainer-release-setup.md](docs/maintainer-release-setup.md).
+
 Required repo secret: **`NPM_TOKEN`** — an npm **Automation** classic token (or granular token scoped to publish `@kristijorgji/*`) that can bypass 2FA.
 
 `setup-node` with `registry-url` generates the auth `.npmrc` from `NODE_AUTH_TOKEN`. Do not hand-write tokens into workspace files.
