@@ -132,7 +132,7 @@ use `restrictedSyntax()` directly if you want just the entry array.
 | `kj/no-multi-comp` | Disallow multiple React components in a single file. | No |
 | `kj/no-pure-type-alias` | Discourage pure re-alias type declarations (`type A = B;`). | No |
 | `kj/no-single-export-barrel` | Disallow `index.ts` barrels that only re-export a single symbol. | No |
-| `kj/no-weak-typeof-satisfies` | Disallow `typeof expr` in `satisfies` when `expr` is `any`/`unknown`. | No |
+| `kj/no-weak-typeof-satisfies` | Disallow `typeof expr` in `satisfies` when `expr` is `any`/`unknown` (enable via `typed()`). | No |
 | `kj/jsx-leading-prop-order` | Require configured leading JSX attributes to appear in order. | Yes |
 | `kj/no-barrel` | Disallow importing/exporting a configured package's barrel entry point. | No |
 
