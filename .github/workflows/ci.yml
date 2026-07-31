@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm test
+      - run: pnpm lint
+      - name: Require changeset on package PRs
+        if: github.event_name == 'pull_request'
+        run: |
+          if git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -q '^packages/'; then
+            pnpm changeset status --since=origin/${{ github.base_ref }}
+          else
+            echo "No packages/** changes; changeset not required."
+          fi
+
+  plugin-compat:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - eslint: '9'
+            typescript: '5'
+          - eslint: '10'
+            typescript: '6'
+    name: plugin eslint@${{ matrix.eslint }} + typescript@${{ matrix.typescript }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @kristijorgji/eslint-plugin build
+      - name: Install matrix peers
+        working-directory: packages/eslint-plugin
+        run: |
+          pnpm add -D --no-lockfile eslint@${{ matrix.eslint }} typescript@${{ matrix.typescript }}
+      - run: pnpm --filter @kristijorgji/eslint-plugin test

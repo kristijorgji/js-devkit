@@ -1,0 +1,53 @@
+{
+  "name": "@kristijorgji/eslint-plugin",
+  "version": "0.0.0",
+  "description": "Custom ESLint rules for TypeScript and React projects (kj namespace)",
+  "type": "module",
+  "license": "MIT",
+  "author": "kristijorgji",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristijorgji/js-devkit.git",
+    "directory": "packages/eslint-plugin"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "eslint": "^9 || ^10",
+    "typescript": "^5 || ^6"
+  },
+  "dependencies": {
+    "@typescript-eslint/utils": "^8"
+  },
+  "devDependencies": {
+    "@typescript-eslint/rule-tester": "^8",
+    "@types/estree": "^1",
+    "eslint": "^9",
+    "typescript": "^5",
+    "typescript-eslint": "^8",
+    "vitest": "^3"
+  }
+}

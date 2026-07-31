@@ -1,0 +1,49 @@
+{
+  "name": "@kristijorgji/code-analysis",
+  "version": "0.0.0",
+  "description": "Repository code-analysis CLI (kj-analyze) — test-mock duplication and more",
+  "type": "module",
+  "license": "MIT",
+  "author": "kristijorgji",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "bin": {
+    "kj-analyze": "./dist/cli.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristijorgji/js-devkit.git",
+    "directory": "packages/code-analysis"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "ts-morph": "^25"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "typescript": "^5",
+    "vitest": "^3"
+  }
+}
