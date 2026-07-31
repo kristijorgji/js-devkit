@@ -29,14 +29,15 @@ export default [
 ];
 ```
 
-`recommended()` registers the `kj` plugin and enables:
+`recommended()` registers the `kj` plugin on `**/*.{ts,tsx}` and enables:
 
 - `kj/no-pure-type-alias`
 - `kj/no-single-export-barrel`
-- `kj/no-weak-typeof-satisfies`
 - `kj/jsx-leading-prop-order`
 
 Pass `{ severity: 'warn' }` to downgrade all of them to warnings.
+
+`kj/no-weak-typeof-satisfies` is **not** in `recommended()` — it needs type information. Use `typed()` for that.
 
 ### Type-aware rules
 

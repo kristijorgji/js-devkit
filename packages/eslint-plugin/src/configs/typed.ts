@@ -18,6 +18,7 @@ export function typed(options: TypedOptions): Linter.Config[] {
 
   return [
     {
+      files: ['**/*.{ts,tsx}'],
       plugins: { kj: plugin },
       languageOptions: {
         parserOptions: {
