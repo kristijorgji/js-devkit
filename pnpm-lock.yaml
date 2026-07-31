@@ -63,6 +63,9 @@ importers:
       eslint-plugin-react-refresh:
         specifier: ^0.4
         version: 0.4.26(eslint@9.39.5)
+      globals:
+        specifier: ^16
+        version: 16.5.0
     devDependencies:
       '@next/eslint-plugin-next':
         specifier: ^15

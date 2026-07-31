@@ -2,8 +2,9 @@ import { componentExtraction, plugin as kjPlugin } from '@kristijorgji/eslint-pl
 import type { Linter } from 'eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import globals from 'globals';
 
-/** Shared React core: hooks, refresh, kj JSX/barrel/extraction rules. */
+/** Shared React core: hooks, refresh, kj JSX/barrel/extraction rules, browser globals. */
 export function createSharedReactConfigs(options?: {
   extractionIgnores?: string[];
 }): Linter.Config[] {
@@ -16,6 +17,14 @@ export function createSharedReactConfigs(options?: {
   ];
 
   return [
+    {
+      files: ['**/*.{ts,tsx}'],
+      languageOptions: {
+        globals: {
+          ...globals.browser,
+        },
+      },
+    },
     {
       plugins: {
         'react-hooks': reactHooks,
