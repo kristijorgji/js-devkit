@@ -1,14 +1,12 @@
-# Release 2: folding in the two config packages (deferred)
+# Release 2: folding in the two config packages
 
-Executable checklist for a later agent. Do **not** start until the preconditions below are met.
+**Status (2026-07-31):** Packages live in this monorepo at `1.0.0` on `main` (`createTypescriptConfig` / `createReactConfig`). Old single-package repos are archived. npm publish of Release 1 (`eslint-plugin` / `code-analysis` `0.1.0`) and these majors is blocked until a valid npm Automation `NPM_TOKEN` is set — see [maintainer-release-setup.md](./maintainer-release-setup.md).
 
-**Goal:** publish `@kristijorgji/eslint-config-typescript@1.0.0` and `@kristijorgji/eslint-config-react-typescript@1.0.0` from this monorepo, keeping the existing npm names, both flat-config, both built on `@kristijorgji/eslint-plugin`.
+Executable checklist (historical). Original preconditions:
 
-**Do not start until:**
-
-- `@kristijorgji/eslint-plugin` and `@kristijorgji/code-analysis` are published at `>= 0.1.0`
-- both `react_ts_vite_tailwind_sb` and prona365 are migrated onto those packages and green
-- you have written down what each consumer's local `eslint.config` still contains after that migration (that list is the input to step 4)
+- `@kristijorgji/eslint-plugin` and `@kristijorgji/code-analysis` published at `>= 0.1.0`
+- both `react_ts_vite_tailwind_sb` and prona365 migrated onto those packages and green
+- inventory of each consumer's local `eslint.config` after migration — see [consumer-eslint-inventory.md](./consumer-eslint-inventory.md)
 
 ## Step 1 — Vendor the sources
 
