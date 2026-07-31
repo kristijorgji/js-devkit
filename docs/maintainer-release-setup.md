@@ -46,6 +46,12 @@ If Release logs show an empty `NODE_AUTH_TOKEN` / auth failures on publish, the 
 gh secret set NPM_TOKEN -R kristijorgji/js-devkit
 ```
 
+### Token requirements
+
+- Must be an npm **Automation** classic token (`npm_…`) or a **granular** token with **Read and write** on `@kristijorgji/*` **and** permission to **create** new packages under that scope.
+- A random UUID / GitHub PAT is not an npm token — `npm whoami` will 401 and publish will fail.
+- First publish of a new package name can return **`E404 Not Found` on PUT** when the token belongs to a different npm user than the scope owner (`kristijorgji`), or when the granular token cannot create packages. Confirm with `npm whoami` that the identity matches the maintainer of existing `@kristijorgji/*` packages.
+
 ## Provenance
 
 [`.github/workflows/release.yml`](../.github/workflows/release.yml) sets `permissions.id-token: write`. Each publishable package has `"publishConfig": { "access": "public", "provenance": true }`. Together they attach npm provenance attestations on publish.

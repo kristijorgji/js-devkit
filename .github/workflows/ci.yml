@@ -59,3 +59,23 @@ jobs:
         run: |
           pnpm add -D --no-lockfile eslint@${{ matrix.eslint }} typescript@${{ matrix.typescript }}
       - run: pnpm --filter @kristijorgji/eslint-plugin test
+
+  config-compat:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - '@kristijorgji/eslint-config-typescript'
+          - '@kristijorgji/eslint-config-react-typescript'
+    name: ${{ matrix.package }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter ${{ matrix.package }}... build
+      - run: pnpm --filter ${{ matrix.package }} test

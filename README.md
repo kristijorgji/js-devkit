@@ -83,10 +83,13 @@ Full flags, config file, and programmatic API: [packages/code-analysis/README.md
 js-devkit/
 ├── packages/
 │   ├── eslint-plugin/     # @kristijorgji/eslint-plugin
-│   └── code-analysis/     # @kristijorgji/code-analysis
+│   ├── code-analysis/     # @kristijorgji/code-analysis
+│   ├── eslint-config-typescript/       # createTypescriptConfig
+│   └── eslint-config-react-typescript/ # createReactConfig (vite|next)
 ├── docs/
 │   ├── rules/             # Per-rule docs (linked from RuleCreator URLs)
 │   ├── maintainer-release-setup.md  # One-time Actions + NPM_TOKEN checklist
+│   ├── consumer-eslint-inventory.md # What stays local after R2 factories
 │   └── release-2-eslint-configs.md
 ├── .changeset/            # Changesets config + pending changesets
 ├── .github/workflows/     # CI + release
@@ -157,12 +160,14 @@ Details, conventions, and GitHub Actions setup: [CONTRIBUTING.md](CONTRIBUTING.m
 | ------- | --------------- |
 | `@kristijorgji/eslint-plugin` | `eslint` ^9 \|\| ^10, `typescript` ^5 \|\| ^6 |
 | `@kristijorgji/code-analysis` | Node >= 22.16.0 (no ESLint peer) |
+| `@kristijorgji/eslint-config-typescript` | `eslint` ^9 \|\| ^10, `typescript` ^5 \|\| ^6, `prettier` ^3 |
+| `@kristijorgji/eslint-config-react-typescript` | same + optional framework peers (`react-x` / Next / Storybook) |
 
 Dropping a supported major is a **major** bump of the affected package. Packages version independently (Changesets `linked: []`).
 
 ## Roadmap
 
-Release 2 will fold the existing `@kristijorgji/eslint-config-typescript` and `@kristijorgji/eslint-config-react-typescript` packages into this monorepo as flat-config factories built on `@kristijorgji/eslint-plugin`. See [docs/release-2-eslint-configs.md](docs/release-2-eslint-configs.md).
+Config packages now live in this monorepo (`createTypescriptConfig` / `createReactConfig`). Remaining: publish majors, migrate consumers off hand-rolled configs, archive the old single-package repos. See [docs/release-2-eslint-configs.md](docs/release-2-eslint-configs.md) and [docs/consumer-eslint-inventory.md](docs/consumer-eslint-inventory.md).
 
 ## License
 
