@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/eslint-config-react-typescript",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Flat ESLint React TypeScript config factory (vite | next) on @kristijorgji/eslint-config-typescript",
   "type": "module",
   "license": "MIT",
@@ -47,12 +47,24 @@
     "typescript": "^5 || ^6"
   },
   "peerDependenciesMeta": {
-    "@next/eslint-plugin-next": { "optional": true },
-    "eslint-plugin-jsx-a11y": { "optional": true },
-    "eslint-plugin-react": { "optional": true },
-    "eslint-plugin-react-dom": { "optional": true },
-    "eslint-plugin-react-x": { "optional": true },
-    "eslint-plugin-storybook": { "optional": true }
+    "@next/eslint-plugin-next": {
+      "optional": true
+    },
+    "eslint-plugin-jsx-a11y": {
+      "optional": true
+    },
+    "eslint-plugin-react": {
+      "optional": true
+    },
+    "eslint-plugin-react-dom": {
+      "optional": true
+    },
+    "eslint-plugin-react-x": {
+      "optional": true
+    },
+    "eslint-plugin-storybook": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@kristijorgji/eslint-config-typescript": "workspace:^",
