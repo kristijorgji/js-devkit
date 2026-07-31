@@ -25,14 +25,17 @@ jobs:
           registry-url: https://registry.npmjs.org
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Verify npm auth
+      - name: Verify npm auth (publish path)
+        continue-on-error: true
         run: |
           if [ -z "${NODE_AUTH_TOKEN:-}" ]; then
-            echo "::error::NPM_TOKEN secret is empty. Set an npm Automation token (npm_…) as repo secret NPM_TOKEN."
-            exit 1
+            echo "::warning::NPM_TOKEN secret is empty. Version PRs can still open; publish will fail until an npm Automation token (npm_…) is set. See docs/maintainer-release-setup.md"
+            exit 0
           fi
           echo "NODE_AUTH_TOKEN length: ${#NODE_AUTH_TOKEN}"
-          npm whoami
+          if ! npm whoami; then
+            echo "::warning::npm whoami failed (401). Token is present but invalid/unauthorized. Fix NPM_TOKEN before merging a version PR. See docs/maintainer-release-setup.md"
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - uses: changesets/action@v1
