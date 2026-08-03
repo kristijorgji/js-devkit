@@ -23,9 +23,10 @@ Snapshot of what each consumer still owns locally after migrating onto `@kristij
 
 | Package | Resolution |
 | --- | --- |
-| `@kristijorgji/eslint-plugin` | **`link:../js-devkit/packages/eslint-plugin`** (not npm) |
-| `@kristijorgji/code-analysis` | **`link:../js-devkit/packages/code-analysis`** (not npm; knip/analyze, not ESLint config) |
-| `@kristijorgji/eslint-config-typescript` / `…-react-typescript` | **Not consumed yet** (R2 target) |
+| `@kristijorgji/eslint-plugin` | npm `^0.1.1` (was `link:` during migration) |
+| `@kristijorgji/code-analysis` | npm `^0.1.1` (knip/analyze, not ESLint config) |
+| `@kristijorgji/eslint-config-react-typescript` | npm `^1.0.0` via `createReactConfig({ variant: 'vite' })` |
+| `@kristijorgji/eslint-config-typescript` | pulled in by the react factory |
 
 ### Current entrypoints
 
@@ -77,8 +78,9 @@ Target shape after R2: `createReactConfig({ variant: 'vite', storybook: true, �
 
 | Package | Resolution |
 | --- | --- |
-| `@kristijorgji/eslint-plugin` | **`link:` absolute path** to `…/libs/js-devkit/packages/eslint-plugin` (not npm) |
-| `@kristijorgji/code-analysis` | Root `package.json` also **link:** to js-devkit (analyzer, not this package) |
+| `@kristijorgji/eslint-plugin` | npm `^0.1.1` (via `@repo/eslint-config`) |
+| `@kristijorgji/code-analysis` | npm `^0.1.1` at workspace root (analyzer) |
+| `@kristijorgji/eslint-config-typescript` / `…-react-typescript` | npm `^1.0.0` via `@repo/eslint-config` factories |
 | Workspace consumers | `@repo/eslint-config`: `workspace:*` |
 
 ### Module map
@@ -166,7 +168,7 @@ Release-2 wording “domain-glossary rules” maps to these app-level restricted
 
 ## 4. Dep / link checklist for R2 migration notes
 
-1. Both consumers still on **link:** `@kristijorgji/eslint-plugin` until publish ≥ 0.1.0.
-2. Neither consumes published `@kristijorgji/eslint-config-*` yet.
-3. Prona peer range still `eslint: ^9` while vite consumer is on **ESLint 10** — factory peers should be `^9 \|\| ^10` as planned.
+1. Packages are on npm: plugin / code-analysis ≥ `0.1.1`, eslint-config-* at `1.0.0`. Consumers should use registry ranges, not `link:`.
+2. Factories ship via `@kristijorgji/eslint-config-typescript` / `@kristijorgji/eslint-config-react-typescript`; `@repo/eslint-config` (prona) and sb wrap them.
+3. Prona peer range still `eslint: ^9` while vite consumer is on **ESLint 10** — factory peers are `^9 || ^10`.
 4. After factories land: drop duplicate plugin deps from consumer `package.json` where the factory bundles them; keep formatjs / i18next / Next-or-Vite optional peers per variant.

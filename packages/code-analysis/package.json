@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/code-analysis",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Repository code-analysis CLI (kj-analyze) — test-mock duplication and more",
   "type": "module",
   "license": "MIT",

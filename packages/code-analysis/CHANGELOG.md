@@ -1,5 +1,11 @@
 # @kristijorgji/code-analysis
 
+## 0.1.1
+
+### Patch Changes
+
+- Registry sync after the initial `0.1.0` publish (visibility lag on a brand-new package name). Same bits as `0.1.0`.
+
 ## 0.1.0
 
 ### Minor Changes

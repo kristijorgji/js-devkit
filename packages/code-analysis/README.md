@@ -2,6 +2,8 @@
 
 Repository code-analysis CLI (`kj-analyze`) for TypeScript/JavaScript codebases — starting with test-mock duplication detection, with room to grow into more analyzers.
 
+Published from the [js-devkit](https://github.com/kristijorgji/js-devkit) monorepo via npm Trusted Publishing (OIDC).
+
 ## Install
 
 ```bash
