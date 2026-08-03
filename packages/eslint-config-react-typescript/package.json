@@ -74,7 +74,7 @@
     "globals": "^16"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^15",
+    "@next/eslint-plugin-next": "^16",
     "@types/node": "^22",
     "eslint": "^9",
     "eslint-plugin-react": "^7",
