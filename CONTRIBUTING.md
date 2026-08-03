@@ -26,7 +26,7 @@ Use [Conventional Commits](https://www.conventionalcommits.org/). Examples: `fea
 - [ ] New rules include `docs/rules/<name>.md` and tests
 - [ ] Option types are exported when you add configurable APIs
 
-CI enforces changesets on PRs that touch `packages/**` via `pnpm changeset status --since=origin/<base>`.
+CI enforces changesets on PRs that touch `packages/**` via `pnpm changeset status --since=origin/<base>`. Dependabot dependency PRs are exempt from that gate (build/test/lint still run); intentional releases still use human changesets.
 
 ## Releasing (Changesets)
 
