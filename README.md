@@ -88,9 +88,7 @@ js-devkit/
 │   └── eslint-config-react-typescript/ # createReactConfig (vite|next)
 ├── docs/
 │   ├── rules/             # Per-rule docs (linked from RuleCreator URLs)
-│   ├── maintainer-release-setup.md  # One-time Actions + Trusted Publishing checklist
-│   ├── consumer-eslint-inventory.md # What stays local after R2 factories
-│   └── release-2-eslint-configs.md
+│   └── maintainer-release-setup.md  # One-time Actions + Trusted Publishing checklist
 ├── .changeset/            # Changesets config + pending changesets
 ├── .github/workflows/     # CI + release
 ├── CONTRIBUTING.md
@@ -112,7 +110,7 @@ pnpm lint
 
 ### Try a change against a real consumer before publishing
 
-From a consumer repo (for example `react_ts_vite_tailwind_sb`):
+From a consumer repo (for example `../my-app`):
 
 ```bash
 pnpm add -D link:../js-devkit/packages/eslint-plugin
@@ -167,7 +165,7 @@ Dropping a supported major is a **major** bump of the affected package. Packages
 
 ## Roadmap
 
-Config packages now live in this monorepo (`createTypescriptConfig` / `createReactConfig`). Remaining: publish majors, migrate consumers off hand-rolled configs, archive the old single-package repos. See [docs/release-2-eslint-configs.md](docs/release-2-eslint-configs.md) and [docs/consumer-eslint-inventory.md](docs/consumer-eslint-inventory.md).
+Config packages live in this monorepo (`createTypescriptConfig` / `createReactConfig`) alongside the plugin and `kj-analyze`. Further work is driven by Changesets on `packages/**` as needed.
 
 ## License
 

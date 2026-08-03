@@ -17,7 +17,7 @@ export interface BaseRulesOptions {
 /**
  * Core TypeScript lint rules (no type-aware block).
  * Includes `kj/no-pure-type-alias` only — single-export barrels and JSX prop order
- * belong on the React factory (prona/sb split placement).
+ * belong on the React factory.
  */
 export function baseRules(options?: BaseRulesOptions): Linter.RulesRecord {
   const prettier = options?.prettier ?? true;
