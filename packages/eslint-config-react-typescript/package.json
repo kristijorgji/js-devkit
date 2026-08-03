@@ -83,6 +83,6 @@
     "eslint-plugin-storybook": "^9",
     "prettier": "^3",
     "typescript": "^5",
-    "vitest": "^3"
+    "vitest": "^4"
   }
 }
