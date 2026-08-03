@@ -35,9 +35,12 @@ export default [
 
 - `kj/no-pure-type-alias`
 - `kj/no-single-export-barrel`
-- `kj/jsx-leading-prop-order`
 
 Pass `{ severity: 'warn' }` to downgrade all of them to warnings.
+
+JSX prop order is **not** in this package — use
+`@kristijorgji/eslint-config-react-typescript`, which enables
+`perfectionist/sort-jsx-props`.
 
 `kj/no-weak-typeof-satisfies` is **not** in `recommended()` — it needs type information. Use `typed()` for that.
 
@@ -74,6 +77,30 @@ export default [
 This enables `kj/no-multi-comp` for `**/*.tsx` files, plus `max-lines-per-function`
 and `max-lines` for components, and `max-lines-per-function` for hook files
 (`**/use*.ts`, `**/hooks/**/*.ts`).
+
+#### Bundled agent skill
+
+This package ships `skills/component-extraction/` (an [Agent Skills](https://agentskills.io)
+`SKILL.md`). Coding agents do **not** read `node_modules` automatically — sync the
+folder into your project's `.agents/skills/` (for example under
+`.agents/skills/vendor/component-extraction/`) after install.
+
+Optional Cursor rule wrapper (lives in the **consumer** repo, not this package):
+
+```md
+---
+description: Split oversized React components and hooks flagged by ESLint
+globs: "**/*.{tsx,ts}"
+alwaysApply: false
+---
+
+# Component extraction
+
+When ESLint reports `kj/no-multi-comp`, `max-lines-per-function`, or `max-lines`
+warnings, or when splitting components/hooks, read and follow:
+
+- [.agents/skills/vendor/component-extraction/SKILL.md](../../.agents/skills/vendor/component-extraction/SKILL.md)
+```
 
 ### `no-barrel`
 
@@ -135,7 +162,6 @@ use `restrictedSyntax()` directly if you want just the entry array.
 | `kj/no-pure-type-alias` | Discourage pure re-alias type declarations (`type A = B;`). | No |
 | `kj/no-single-export-barrel` | Disallow `index.ts` barrels that only re-export a single symbol. | No |
 | `kj/no-weak-typeof-satisfies` | Disallow `typeof expr` in `satisfies` when `expr` is `any`/`unknown` (enable via `typed()`). | No |
-| `kj/jsx-leading-prop-order` | Require configured leading JSX attributes to appear in order. | Yes |
 | `kj/no-barrel` | Disallow importing/exporting a configured package's barrel entry point. | No |
 
 ### Options
@@ -149,9 +175,6 @@ use `restrictedSyntax()` directly if you want just the entry array.
 - **`kj/no-weak-typeof-satisfies`**: `{ allowUnknown?: boolean (default false) }`.
   When `true`, only `any` is flagged (not `unknown`). Requires type information —
   use with `typed()` or a type-aware parser configuration.
-- **`kj/jsx-leading-prop-order`**: `{ order?: string[] }`, defaults to
-  `['data-testid', 'testID', 'key', 'ref', 'id', 'name']`. Never reorders attributes
-  across a `{...spread}`.
 - **`kj/no-barrel`**: `{ packageName: string, exampleSubpath: string }` (both
   **required**).
 
@@ -165,7 +188,7 @@ If you previously vendored these rules locally, update rule IDs as follows:
 | `type-alias/no-pure-alias` | `kj/no-pure-type-alias` |
 | `no-single-export-barrel/no-single-export-barrel` | `kj/no-single-export-barrel` |
 | `repo-typing/no-weak-typeof-satisfies` | `kj/no-weak-typeof-satisfies` |
-| `jsx-leading-prop-order/jsx-leading-prop-order` | `kj/jsx-leading-prop-order` |
+| `jsx-leading-prop-order/jsx-leading-prop-order` | `perfectionist/sort-jsx-props` (via `@kristijorgji/eslint-config-react-typescript`) |
 | `<pkg>/no-barrel` (e.g. `utils/no-barrel`) | `kj/no-barrel` (pass `packageName`/`exampleSubpath` in options) |
 
 ## Overriding caveat
@@ -182,7 +205,7 @@ export default [
     files: ['**/*.tsx'],
     rules: {
       // This wins over recommended()'s severity for the same rule/files.
-      'kj/jsx-leading-prop-order': 'off',
+      'kj/no-pure-type-alias': 'warn',
     },
   },
 ];

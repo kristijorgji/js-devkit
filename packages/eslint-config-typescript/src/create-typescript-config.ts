@@ -1,10 +1,11 @@
 import prettierConfig from 'eslint-config-prettier';
 import type { Linter } from 'eslint';
-import type { Options as PrettierOptions } from 'prettier';
 import tseslint from 'typescript-eslint';
 
 import { createBaseConfig } from './base.js';
 import { ignores as defaultIgnores } from './ignores.js';
+import type { ImportXOrderOptions, SortImportsOptions } from './import-order.js';
+import type { PrettierSetting } from './prettier.js';
 import { createTypedLintConfig } from './typed.js';
 
 export interface CreateTypescriptConfigOptions {
@@ -16,12 +17,18 @@ export interface CreateTypescriptConfigOptions {
    */
   tsconfigRootDir?: string;
   /**
-   * Prettier integration. `true` (default) uses package defaults; pass an options
-   * object to override; `false` disables `prettier/prettier` (still applies prettierConfig last).
+   * Prettier integration. `true` (default) uses package defaults; `'prettierrc'`
+   * defers to the consumer's Prettier config file; pass an options object to
+   * replace defaults; `false` disables `prettier/prettier` (still applies
+   * eslint-config-prettier last).
    */
-  prettier?: boolean | PrettierOptions;
+  prettier?: PrettierSetting;
   /** Extra ignore patterns merged into the default ignores block. */
   ignores?: string[];
+  /** `import-x/order` options (shallow merge). `false` disables the rule. */
+  importOrder?: false | ImportXOrderOptions;
+  /** `sort-imports` options (shallow merge). `false` disables the rule. */
+  sortImports?: false | SortImportsOptions;
 }
 
 /**
@@ -43,6 +50,8 @@ export function createTypescriptConfig(options: CreateTypescriptConfigOptions = 
     createBaseConfig({
       files,
       prettier: options.prettier,
+      importOrder: options.importOrder,
+      sortImports: options.sortImports,
     }),
   ];
 

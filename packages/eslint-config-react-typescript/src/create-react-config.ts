@@ -4,6 +4,7 @@ import {
 } from '@kristijorgji/eslint-config-typescript';
 import type { ESLint, Linter } from 'eslint';
 
+import type { SortJsxPropsOptions } from './jsx-props.js';
 import { createSharedReactConfigs } from './shared.js';
 
 export type ReactConfigVariant = 'vite' | 'next';
@@ -19,6 +20,8 @@ export interface CreateReactConfigOptions extends CreateTypescriptConfigOptions 
   a11y?: boolean;
   /** Extra ignores passed to `componentExtraction`. */
   extractionIgnores?: string[];
+  /** `false` disables JSX prop sorting; an object shallow-merges over package defaults. */
+  jsxProps?: false | SortJsxPropsOptions;
 }
 
 type AnyPlugin = ESLint.Plugin;
@@ -142,6 +145,7 @@ export async function createReactConfig(
     storybook = false,
     a11y = false,
     extractionIgnores,
+    jsxProps,
     ...tsOptions
   } = options;
 
@@ -150,7 +154,7 @@ export async function createReactConfig(
       ...tsOptions,
       tsconfigRootDir,
     }),
-    ...createSharedReactConfigs({ extractionIgnores }),
+    ...createSharedReactConfigs({ extractionIgnores, jsxProps }),
   ];
 
   if (variant === 'vite') {

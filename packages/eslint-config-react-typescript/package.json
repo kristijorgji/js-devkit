@@ -69,6 +69,7 @@
   "dependencies": {
     "@kristijorgji/eslint-config-typescript": "workspace:^",
     "@kristijorgji/eslint-plugin": "workspace:^",
+    "eslint-plugin-perfectionist": "^4.15.0",
     "eslint-plugin-react-hooks": "^5",
     "eslint-plugin-react-refresh": "^0.4",
     "globals": "^17"

@@ -57,3 +57,9 @@ declare module 'eslint-plugin-react' {
   };
   export default plugin;
 }
+
+declare module 'eslint-plugin-perfectionist' {
+  import type { ESLint } from 'eslint';
+  const plugin: ESLint.Plugin;
+  export default plugin;
+}
