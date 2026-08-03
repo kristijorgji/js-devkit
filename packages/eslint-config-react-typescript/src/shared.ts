@@ -4,9 +4,13 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 
-/** Shared React core: hooks, refresh, kj JSX/barrel/extraction rules, browser globals. */
+import { createJsxPropsConfig, type SortJsxPropsOptions } from './jsx-props.js';
+
+/** Shared React core: hooks, refresh, kj barrel/extraction rules, browser globals, JSX prop order. */
 export function createSharedReactConfigs(options?: {
   extractionIgnores?: string[];
+  /** `false` disables JSX prop sorting; an object shallow-merges over package defaults. */
+  jsxProps?: false | SortJsxPropsOptions;
 }): Linter.Config[] {
   const extractionIgnores = options?.extractionIgnores ?? [
     '**/components/ui/**',
@@ -16,7 +20,7 @@ export function createSharedReactConfigs(options?: {
     '**/*.stories.ts',
   ];
 
-  return [
+  const configs: Linter.Config[] = [
     {
       files: ['**/*.{ts,tsx}'],
       languageOptions: {
@@ -39,7 +43,6 @@ export function createSharedReactConfigs(options?: {
       files: ['**/*.{ts,tsx}'],
       plugins: { kj: kjPlugin },
       rules: {
-        'kj/jsx-leading-prop-order': 'error',
         'kj/no-single-export-barrel': 'error',
       },
     },
@@ -47,4 +50,10 @@ export function createSharedReactConfigs(options?: {
       ignores: extractionIgnores,
     }),
   ];
+
+  if (options?.jsxProps !== false) {
+    configs.push(createJsxPropsConfig(options?.jsxProps));
+  }
+
+  return configs;
 }

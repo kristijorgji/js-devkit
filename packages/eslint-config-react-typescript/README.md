@@ -19,6 +19,7 @@ pnpm add -D @kristijorgji/eslint-config-react-typescript \
 ```
 
 Framework plugins are **optional peers** — only install what your variant needs.
+`eslint-plugin-perfectionist` is a **dependency** of this package (JSX prop order).
 
 ## Usage
 
@@ -30,6 +31,7 @@ export default await createReactConfig({
   variant: 'vite',
   tsconfigRootDir: import.meta.dirname,
   storybook: true,
+  prettier: 'prettierrc',
 });
 ```
 
@@ -41,13 +43,28 @@ export default await createReactConfig({
 | `tsconfigRootDir` | Required for type-aware rules |
 | `storybook` | Vite only — Storybook flat recommended |
 | `a11y` | Optional `eslint-plugin-jsx-a11y` |
-| plus | All `createTypescriptConfig` options |
+| `jsxProps` | Options for `perfectionist/sort-jsx-props` (shallow merge); `false` disables |
+| plus | All `createTypescriptConfig` options (`prettier`, `importOrder`, `sortImports`, …) |
 
 ### Shared React rules
 
 - `eslint-plugin-react-hooks` / `react-refresh`
-- `kj/jsx-leading-prop-order`, `kj/no-single-export-barrel`
+- `perfectionist/sort-jsx-props` (ranked identity props, then unknown, callbacks last)
+- `kj/no-single-export-barrel`
 - `componentExtraction()` (`kj/no-multi-comp` + line limits, warn)
+
+### Standalone JSX prop config
+
+Consumers with a custom React preset (for example React Native) can compose without
+the full factory:
+
+```js
+import { createJsxPropsConfig } from '@kristijorgji/eslint-config-react-typescript';
+
+export default [
+  createJsxPropsConfig(),
+];
+```
 
 Rewritten from the legacy `eslint-config-react-app` shareable config
 ([`8c090ded`](https://github.com/kristijorgji/eslint-config-react-typescript/commit/8c090ded195c4c957cee7e24b3b5b024ad6120f9)) — not a port of that lineage.

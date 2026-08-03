@@ -4,8 +4,16 @@ export {
   type CreateTypescriptConfigOptions,
 } from './create-typescript-config.js';
 export { ignores } from './ignores.js';
-export { importOrderRules } from './import-order.js';
-export { defaultPrettierOptions, prettierRules } from './prettier.js';
+export {
+  createImportOrderRules,
+  defaultImportXOrderOptions,
+  defaultSortImportsOptions,
+  importOrderRules,
+  type CreateImportOrderRulesOptions,
+  type ImportXOrderOptions,
+  type SortImportsOptions,
+} from './import-order.js';
+export { defaultPrettierOptions, prettierRules, type PrettierSetting } from './prettier.js';
 export {
   createTypedLintConfig,
   type CreateTypedLintConfigOptions,

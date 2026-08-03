@@ -6,12 +6,24 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-import { importOrderRules } from './import-order.js';
-import { defaultPrettierOptions, prettierRules } from './prettier.js';
+import {
+  createImportOrderRules,
+  type ImportXOrderOptions,
+  type SortImportsOptions,
+} from './import-order.js';
+import { defaultPrettierOptions, prettierRules, type PrettierSetting } from './prettier.js';
 
 export interface BaseRulesOptions {
-  /** Whether to enable `prettier/prettier`. Defaults to true. */
-  prettier?: boolean | typeof defaultPrettierOptions;
+  /**
+   * Prettier integration. `true` (default) uses package defaults; `'prettierrc'`
+   * defers to the consumer's Prettier config file; pass an options object to
+   * replace defaults; `false` disables `prettier/prettier`.
+   */
+  prettier?: PrettierSetting;
+  /** `import-x/order` options (shallow merge). `false` disables the rule. */
+  importOrder?: false | ImportXOrderOptions;
+  /** `sort-imports` options (shallow merge). `false` disables the rule. */
+  sortImports?: false | SortImportsOptions;
 }
 
 /**
@@ -21,13 +33,22 @@ export interface BaseRulesOptions {
  */
 export function baseRules(options?: BaseRulesOptions): Linter.RulesRecord {
   const prettier = options?.prettier ?? true;
-  const prettierOpts =
-    prettier === false ? null : prettier === true ? defaultPrettierOptions : prettier;
+  let prettierRuleBlock: Linter.RulesRecord = {};
+  if (prettier === 'prettierrc') {
+    prettierRuleBlock = prettierRules('prettierrc');
+  } else if (prettier === true) {
+    prettierRuleBlock = prettierRules(defaultPrettierOptions);
+  } else if (prettier !== false) {
+    prettierRuleBlock = prettierRules(prettier);
+  }
 
   return {
     ...js.configs.recommended.rules,
     'no-unused-vars': 'off',
-    ...importOrderRules,
+    ...createImportOrderRules({
+      importOrder: options?.importOrder,
+      sortImports: options?.sortImports,
+    }),
     'import-x/no-unresolved': 'off',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-unused-vars': [
@@ -43,7 +64,7 @@ export function baseRules(options?: BaseRulesOptions): Linter.RulesRecord {
       },
     ],
     'kj/no-pure-type-alias': 'error',
-    ...(prettierOpts ? prettierRules(prettierOpts) : {}),
+    ...prettierRuleBlock,
   };
 }
 

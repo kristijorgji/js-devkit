@@ -16,5 +16,4 @@ export type { NoMultiCompOptions } from './rules/no-multi-comp.js';
 export type { NoPureTypeAliasOptions } from './rules/no-pure-type-alias.js';
 export type { NoSingleExportBarrelOptions } from './rules/no-single-export-barrel.js';
 export type { NoWeakTypeofSatisfiesOptions } from './rules/no-weak-typeof-satisfies.js';
-export type { JsxLeadingPropOrderOptions } from './rules/jsx-leading-prop-order.js';
 export type { NoBarrelOptions } from './rules/no-barrel.js';

@@ -1,6 +1,5 @@
 import type { ESLint } from 'eslint';
 
-import { jsxLeadingPropOrder } from './rules/jsx-leading-prop-order.js';
 import { noBarrel } from './rules/no-barrel.js';
 import { noMultiComp } from './rules/no-multi-comp.js';
 import { noPureTypeAlias } from './rules/no-pure-type-alias.js';
@@ -17,7 +16,6 @@ const rules = {
   'no-pure-type-alias': noPureTypeAlias,
   'no-single-export-barrel': noSingleExportBarrel,
   'no-weak-typeof-satisfies': noWeakTypeofSatisfies,
-  'jsx-leading-prop-order': jsxLeadingPropOrder,
   'no-barrel': noBarrel,
 };
 

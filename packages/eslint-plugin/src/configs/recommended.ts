@@ -10,7 +10,9 @@ export interface RecommendedOptions {
  * Baseline recommended rules for TypeScript/TSX files.
  * `kj/no-weak-typeof-satisfies` is type-aware — enable it via `typed()` instead.
  * `no-multi-comp` and `no-barrel` are intentionally left out (see `componentExtraction()`
- * and manual opt-in respectively). Returns a fresh array on every call.
+ * and manual opt-in respectively). JSX prop order lives on
+ * `@kristijorgji/eslint-config-react-typescript` (`perfectionist/sort-jsx-props`).
+ * Returns a fresh array on every call.
  */
 export function recommended(options?: RecommendedOptions): Linter.Config[] {
   const severity = options?.severity ?? 'error';
@@ -22,7 +24,6 @@ export function recommended(options?: RecommendedOptions): Linter.Config[] {
       rules: {
         'kj/no-pure-type-alias': severity,
         'kj/no-single-export-barrel': severity,
-        'kj/jsx-leading-prop-order': severity,
       },
     },
   ];
