@@ -8,7 +8,7 @@ export interface CreateTypedLintConfigOptions {
 }
 
 /**
- * Type-aware ESLint block (ported from prona365 `createTypedLintConfig`).
+ * Type-aware ESLint block.
  * Enables `kj/no-weak-typeof-satisfies` plus `@typescript-eslint/no-unnecessary-type-assertion`.
  */
 export function createTypedLintConfig(options: CreateTypedLintConfigOptions): Linter.Config {
