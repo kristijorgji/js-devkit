@@ -1,5 +1,16 @@
 # @kristijorgji/eslint-config-typescript
 
+## 1.1.0
+
+### Minor Changes
+
+- [#23](https://github.com/kristijorgji/js-devkit/pull/23) [`983822b`](https://github.com/kristijorgji/js-devkit/commit/983822b33895cdb17f2d483f0bc6a19ea1970913) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Add `importOrder`, `sortImports`, and `prettier: 'prettierrc'` options (plus `createImportOrderRules`) so consumers can match repo Prettier and import style without local rule overrides.
+
+### Patch Changes
+
+- Updated dependencies [[`983822b`](https://github.com/kristijorgji/js-devkit/commit/983822b33895cdb17f2d483f0bc6a19ea1970913), [`983822b`](https://github.com/kristijorgji/js-devkit/commit/983822b33895cdb17f2d483f0bc6a19ea1970913)]:
+  - @kristijorgji/eslint-plugin@0.2.0
+
 ## 1.0.0
 
 ### Major Changes

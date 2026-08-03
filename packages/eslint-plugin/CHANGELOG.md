@@ -1,5 +1,15 @@
 # @kristijorgji/eslint-plugin
 
+## 0.2.0
+
+### Minor Changes
+
+- [#23](https://github.com/kristijorgji/js-devkit/pull/23) [`983822b`](https://github.com/kristijorgji/js-devkit/commit/983822b33895cdb17f2d483f0bc6a19ea1970913) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Remove `kj/jsx-leading-prop-order`. JSX prop order now comes from `perfectionist/sort-jsx-props` on `@kristijorgji/eslint-config-react-typescript` (new dependency + `jsxProps` / `createJsxPropsConfig`).
+
+### Patch Changes
+
+- [#23](https://github.com/kristijorgji/js-devkit/pull/23) [`983822b`](https://github.com/kristijorgji/js-devkit/commit/983822b33895cdb17f2d483f0bc6a19ea1970913) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Ship a bundled `skills/component-extraction/` Agent Skill for acting on extraction warnings.
+
 ## 0.1.2
 
 ### Patch Changes
