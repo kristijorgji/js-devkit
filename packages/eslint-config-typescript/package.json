@@ -65,7 +65,7 @@
     "@types/node": "^26",
     "eslint": "^10",
     "prettier": "^3",
-    "typescript": "^5",
+    "typescript": "^6",
     "vitest": "^4"
   }
 }
