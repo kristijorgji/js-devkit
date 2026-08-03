@@ -63,13 +63,11 @@ Nothing publishes on the first merge. The version PR is the review gate; merging
 - [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — build, test, lint, changeset status, plugin peer matrix (`eslint@9+ts5` / `eslint@10+ts6`)
 - [`.github/workflows/release.yml`](.github/workflows/release.yml) — Changesets action on push to `main`
 
-Maintainer one-time repo setup (Actions “create and approve PRs” toggle, `NPM_TOKEN`, provenance): [docs/maintainer-release-setup.md](docs/maintainer-release-setup.md).
+Maintainer one-time repo setup (Actions “create and approve PRs” toggle, npm Trusted Publishing, provenance): [docs/maintainer-release-setup.md](docs/maintainer-release-setup.md).
 
-Required repo secret: **`NPM_TOKEN`** — an npm **Automation** classic token (or granular token scoped to publish `@kristijorgji/*`) that can bypass 2FA.
+Publishes use **Trusted Publishing (OIDC)** from [`.github/workflows/release.yml`](.github/workflows/release.yml). Do **not** set `NPM_TOKEN` / `NODE_AUTH_TOKEN` on the Release job — a present token bypasses OIDC. The workflow upgrades npm to ≥ 11.5.1 and sets `permissions.id-token: write`.
 
-`setup-node` with `registry-url` generates the auth `.npmrc` from `NODE_AUTH_TOKEN`. Do not hand-write tokens into workspace files.
-
-`permissions.id-token: write` plus each package's `publishConfig.provenance: true` enables npm provenance attestations.
+Each package keeps `"publishConfig": { "access": "public", "provenance": true }`; under Trusted Publishing, provenance is also generated automatically.
 
 Use the default `GITHUB_TOKEN` (not a PAT) for the release workflow so pushes from Actions do not re-trigger workflows; the human merge of the version PR is what starts publishing.
 

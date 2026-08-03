@@ -1,6 +1,6 @@
 # Release 2: folding in the two config packages
 
-**Status (2026-07-31):** Packages live in this monorepo at `1.0.0` on `main` (`createTypescriptConfig` / `createReactConfig`). Old single-package repos are archived. npm publish of Release 1 (`eslint-plugin` / `code-analysis` `0.1.0`) and these majors is blocked until a valid npm Automation `NPM_TOKEN` is set — see [maintainer-release-setup.md](./maintainer-release-setup.md).
+**Status (2026-08-03):** Packages live in this monorepo and on npm — `@kristijorgji/eslint-plugin` / `@kristijorgji/code-analysis` ≥ `0.1.1`, configs at `1.0.0` (`createTypescriptConfig` / `createReactConfig`). Old single-package repos are archived. CI publishes via **Trusted Publishing** — see [maintainer-release-setup.md](./maintainer-release-setup.md).
 
 Executable checklist (historical). Original preconditions:
 

@@ -23,21 +23,12 @@ jobs:
         with:
           node-version-file: .nvmrc
           registry-url: https://registry.npmjs.org
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - name: Verify npm auth (publish path)
-        continue-on-error: true
+          package-manager-cache: false
+      - name: Ensure npm supports Trusted Publishing
         run: |
-          if [ -z "${NODE_AUTH_TOKEN:-}" ]; then
-            echo "::warning::NPM_TOKEN secret is empty. Version PRs can still open; publish will fail until an npm Automation token (npm_…) is set. See docs/maintainer-release-setup.md"
-            exit 0
-          fi
-          echo "NODE_AUTH_TOKEN length: ${#NODE_AUTH_TOKEN}"
-          if ! npm whoami; then
-            echo "::warning::npm whoami failed (401). Token is present but invalid/unauthorized. Fix NPM_TOKEN before merging a version PR. See docs/maintainer-release-setup.md"
-          fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm install -g npm@latest
+          npm --version
+      - run: pnpm install --frozen-lockfile
       - uses: changesets/action@v1
         with:
           version: pnpm ci:version
@@ -46,4 +37,3 @@ jobs:
           commit: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

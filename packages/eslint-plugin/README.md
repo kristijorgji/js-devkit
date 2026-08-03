@@ -2,6 +2,8 @@
 
 Custom ESLint rules for TypeScript and React projects, namespaced under `kj`.
 
+Published from the [js-devkit](https://github.com/kristijorgji/js-devkit) monorepo via npm Trusted Publishing (OIDC).
+
 Ships flat-config ready rule implementations, ready-made config factories, and a
 small "selector" toolkit for composing your own `no-restricted-syntax` rules.
 

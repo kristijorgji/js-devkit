@@ -88,7 +88,7 @@ js-devkit/
 │   └── eslint-config-react-typescript/ # createReactConfig (vite|next)
 ├── docs/
 │   ├── rules/             # Per-rule docs (linked from RuleCreator URLs)
-│   ├── maintainer-release-setup.md  # One-time Actions + NPM_TOKEN checklist
+│   ├── maintainer-release-setup.md  # One-time Actions + Trusted Publishing checklist
 │   ├── consumer-eslint-inventory.md # What stays local after R2 factories
 │   └── release-2-eslint-configs.md
 ├── .changeset/            # Changesets config + pending changesets
@@ -124,7 +124,7 @@ Rebuild the package after edits (`pnpm --filter @kristijorgji/eslint-plugin buil
 ```bash
 cd packages/eslint-plugin && pnpm pack
 # then in the consumer:
-pnpm add -D /absolute/path/to/kristijorgji-eslint-plugin-0.1.0.tgz
+pnpm add -D /absolute/path/to/kristijorgji-eslint-plugin-0.1.1.tgz
 ```
 
 ## Adding a new rule
