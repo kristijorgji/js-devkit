@@ -1,5 +1,11 @@
 # @kristijorgji/eslint-plugin
 
+## 0.1.2
+
+### Patch Changes
+
+- [#17](https://github.com/kristijorgji/js-devkit/pull/17) [`5341925`](https://github.com/kristijorgji/js-devkit/commit/53419253f3db8133feca90727c16597341e6f8d6) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Document that packages publish from js-devkit via npm Trusted Publishing (OIDC).
+
 ## 0.1.1
 
 ### Patch Changes

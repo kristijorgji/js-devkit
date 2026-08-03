@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/eslint-plugin",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Custom ESLint rules for TypeScript and React projects (kj namespace)",
   "type": "module",
   "license": "MIT",
