@@ -3,6 +3,8 @@ import type { Linter } from 'eslint';
 import tseslint from 'typescript-eslint';
 
 import { createBaseConfig } from './base.js';
+import type { CodeQualityOptions } from './code-quality.js';
+import type { ExplicitTypesOptions } from './explicit-types.js';
 import { ignores as defaultIgnores } from './ignores.js';
 import type { ImportXOrderOptions, SortImportsOptions } from './import-order.js';
 import type { PrettierSetting } from './prettier.js';
@@ -29,6 +31,15 @@ export interface CreateTypescriptConfigOptions {
   importOrder?: false | ImportXOrderOptions;
   /** `sort-imports` options (shallow merge). `false` disables the rule. */
   sortImports?: false | SortImportsOptions;
+  /**
+   * Opt-in sonarjs duplication subset + unused-imports / unused private members.
+   * Default off.
+   */
+  codeQuality?: boolean | CodeQualityOptions;
+  /**
+   * Opt-in consistent-type-* and explicit-* typing rules. Default off.
+   */
+  explicitTypes?: boolean | ExplicitTypesOptions;
 }
 
 /**
@@ -52,6 +63,8 @@ export function createTypescriptConfig(options: CreateTypescriptConfigOptions = 
       prettier: options.prettier,
       importOrder: options.importOrder,
       sortImports: options.sortImports,
+      codeQuality: options.codeQuality,
+      explicitTypes: options.explicitTypes,
     }),
   ];
 

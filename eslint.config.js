@@ -3,7 +3,13 @@ import tseslint from 'typescript-eslint';
 /** Bootstrap self-lint. Once packages are built, consumers should prefer @kristijorgji/eslint-plugin. */
 export default tseslint.config(
     {
-        ignores: ['**/dist/**', '**/coverage/**', '**/node_modules/**', '**/*.tgz'],
+        ignores: [
+            '**/dist/**',
+            '**/coverage/**',
+            '**/node_modules/**',
+            '**/*.tgz',
+            '**/tests/fixtures/**',
+        ],
     },
     ...tseslint.configs.recommended,
     {
