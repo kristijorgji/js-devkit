@@ -7,6 +7,15 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 import {
+  codeQualityPlugins,
+  codeQualityRules,
+  type CodeQualityOptions,
+} from './code-quality.js';
+import {
+  explicitTypesRules,
+  type ExplicitTypesOptions,
+} from './explicit-types.js';
+import {
   createImportOrderRules,
   type ImportXOrderOptions,
   type SortImportsOptions,
@@ -24,6 +33,16 @@ export interface BaseRulesOptions {
   importOrder?: false | ImportXOrderOptions;
   /** `sort-imports` options (shallow merge). `false` disables the rule. */
   sortImports?: false | SortImportsOptions;
+  /**
+   * Opt-in sonarjs duplication subset + unused-imports / unused private members.
+   * `true` enables defaults; an object toggles subgroups; omit / `false` leaves off.
+   */
+  codeQuality?: boolean | CodeQualityOptions;
+  /**
+   * Opt-in consistent-type-* and explicit-* typing rules shared by consumers.
+   * `true` enables defaults; an object toggles individual rules; omit / `false` leaves off.
+   */
+  explicitTypes?: boolean | ExplicitTypesOptions;
 }
 
 /**
@@ -44,6 +63,18 @@ export function baseRules(options?: BaseRulesOptions): Linter.RulesRecord {
 
   return {
     ...js.configs.recommended.rules,
+    // Restore typescript-eslint's eslint-recommended compatibility overrides.
+    // js.configs.recommended re-enables rules TypeScript already covers
+    // (no-undef, no-redeclare, no-dupe-class-members, ...).
+    ...tseslint.configs.eslintRecommended.rules,
+    // Deliberate deviations from eslint-recommended, matching both consumers:
+    // tsc only surfaces unreachable code as an editor suggestion unless
+    // allowUnreachableCode: false is set, so keep the lint rule.
+    'no-unreachable': 'error',
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      { allowShortCircuit: true, allowTernary: true, allowTaggedTemplates: true },
+    ],
     'no-unused-vars': 'off',
     ...createImportOrderRules({
       importOrder: options?.importOrder,
@@ -64,6 +95,8 @@ export function baseRules(options?: BaseRulesOptions): Linter.RulesRecord {
       },
     ],
     'kj/no-pure-type-alias': 'error',
+    ...codeQualityRules(options?.codeQuality),
+    ...explicitTypesRules(options?.explicitTypes),
     ...prettierRuleBlock,
   };
 }
@@ -96,6 +129,7 @@ export function createBaseConfig(options?: BaseConfigOptions): Linter.Config {
       'import-x': importX,
       prettier: prettierPlugin,
       kj: kjPlugin,
+      ...codeQualityPlugins(options?.codeQuality),
     },
     rules: baseRules(options),
   };

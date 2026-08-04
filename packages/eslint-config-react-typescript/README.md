@@ -44,7 +44,10 @@ export default await createReactConfig({
 | `storybook` | Vite only — Storybook flat recommended |
 | `a11y` | Optional `eslint-plugin-jsx-a11y` |
 | `jsxProps` | Options for `perfectionist/sort-jsx-props` (shallow merge); `false` disables |
-| plus | All `createTypescriptConfig` options (`prettier`, `importOrder`, `sortImports`, …) |
+| plus | All `createTypescriptConfig` options (`prettier`, `importOrder`, `sortImports`, `codeQuality`, `explicitTypes`, …) |
+
+Opt-in TypeScript groups (`codeQuality`, `explicitTypes`) are documented on
+[`@kristijorgji/eslint-config-typescript`](https://www.npmjs.com/package/@kristijorgji/eslint-config-typescript).
 
 ### Shared React rules
 
@@ -65,6 +68,13 @@ export default [
   createJsxPropsConfig(),
 ];
 ```
+
+### Rule inventory snapshots
+
+`tests/rule-inventory.test.ts` snapshots enabled rule IDs for the vite and next
+variants (and storybook-prefixed IDs when `storybook: true`). Failures on
+upstream plugin bumps are an **intentional review gate** — update the snapshot
+only after confirming the new rules are wanted.
 
 Rewritten from the legacy `eslint-config-react-app` shareable config
 ([`8c090ded`](https://github.com/kristijorgji/eslint-config-react-typescript/commit/8c090ded195c4c957cee7e24b3b5b024ad6120f9)) — not a port of that lineage.

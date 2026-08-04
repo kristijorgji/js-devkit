@@ -77,12 +77,14 @@
   "devDependencies": {
     "@next/eslint-plugin-next": "^16",
     "@types/node": "^26",
+    "@types/react": "^19.2.18",
     "eslint": "^10",
     "eslint-plugin-react": "^7",
     "eslint-plugin-react-dom": "^5",
     "eslint-plugin-react-x": "^5",
     "eslint-plugin-storybook": "^9",
     "prettier": "^3",
+    "react": "^19.2.8",
     "typescript": "^5",
     "vitest": "^4"
   }
