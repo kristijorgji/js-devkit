@@ -48,6 +48,9 @@ export default await createReactConfig({
 
 Opt-in TypeScript groups (`codeQuality`, `explicitTypes`) are documented on
 [`@kristijorgji/eslint-config-typescript`](https://www.npmjs.com/package/@kristijorgji/eslint-config-typescript).
+When `explicitTypes` enables `explicit-function-return-type`, this factory turns
+that rule **off** for `**/*.{tsx,jsx}` so JSX return types stay inferred while
+`.ts` helpers remain annotated.
 
 ### Shared React rules
 
@@ -58,7 +61,7 @@ Opt-in TypeScript groups (`codeQuality`, `explicitTypes`) are documented on
 
 ### Standalone JSX prop config
 
-Consumers with a custom React preset (for example React Native) can compose without
+Adopters with a custom React preset (for example React Native) can compose without
 the full factory:
 
 ```js

@@ -14,8 +14,8 @@ import { effectiveRules, reportedRuleIds, ruleSeverity } from './helpers/lint.js
 
 const fixtureDir = path.join(path.dirname(fileURLToPath(import.meta.url)), 'fixtures/violations');
 
-/** Option objects both consumers shipped pre-migration / in prona base.js today. */
-const consumerParity = {
+/** Stable option objects for the explicitTypes group. */
+const explicitTypesOptionObjects = {
   consistentTypeAssertions: consistentTypeAssertionsOptions,
   consistentTypeImports: consistentTypeImportsOptions,
   explicitFunctionReturnType: explicitFunctionReturnTypeOptions,
@@ -102,19 +102,19 @@ describe('codeQuality and explicitTypes option groups', () => {
     expect(ruleSeverity(rules['@typescript-eslint/explicit-module-boundary-types'])).toBe(2);
   });
 
-  it('emitted option objects match consumer parity (sb + prona)', () => {
+  it('emitted option objects match the explicitTypes option-object snapshot', () => {
     const rules = explicitTypesRules(true);
     expect(rules['@typescript-eslint/consistent-type-assertions']).toEqual([
       'error',
-      consumerParity.consistentTypeAssertions,
+      explicitTypesOptionObjects.consistentTypeAssertions,
     ]);
     expect(rules['@typescript-eslint/consistent-type-imports']).toEqual([
       'error',
-      consumerParity.consistentTypeImports,
+      explicitTypesOptionObjects.consistentTypeImports,
     ]);
     expect(rules['@typescript-eslint/explicit-function-return-type']).toEqual([
       'error',
-      consumerParity.explicitFunctionReturnType,
+      explicitTypesOptionObjects.explicitFunctionReturnType,
     ]);
     expect(rules['@typescript-eslint/explicit-module-boundary-types']).toBe('error');
   });

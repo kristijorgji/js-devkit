@@ -19,7 +19,7 @@ export default createTypescriptConfig({
   tsconfigRootDir: import.meta.dirname,
   // Prefer your repo's .prettierrc as the single source of truth:
   prettier: 'prettierrc',
-  // Opt into shared consumer policies (default off):
+  // Opt-in groups (default off):
   codeQuality: true,
   explicitTypes: true,
 });
@@ -31,12 +31,12 @@ export default createTypescriptConfig({
 | --- | --- |
 | `files` | Glob patterns (default `**/*.{ts,tsx}`) |
 | `tsconfigRootDir` | Enables type-aware rules via `createTypedLintConfig` |
-| `prettier` | `true` (default, embeds package defaults), `'prettierrc'` (defer to the consumer's Prettier config file), a Prettier options object (replaces defaults), or `false` |
+| `prettier` | `true` (default, embeds package defaults), `'prettierrc'` (defer to the adopter's Prettier config file), a Prettier options object (replaces defaults), or `false` |
 | `ignores` | Extra ignore globs |
 | `importOrder` | Options for `import-x/order`, shallow-merged over package defaults; `false` disables the rule |
 | `sortImports` | Options for `sort-imports`, shallow-merged over package defaults; `false` disables the rule |
 | `codeQuality` | Opt-in (`true` or `{ duplication?, unusedSymbols? }`). Enables the sonarjs in-file duplication subset, `unused-imports/no-unused-imports`, and `@typescript-eslint/no-unused-private-class-members`. Default off. |
-| `explicitTypes` | Opt-in (`true` or per-rule toggles). Enables `consistent-type-assertions`, `consistent-type-imports`, `explicit-module-boundary-types`, and `explicit-function-return-type` with the option objects shared by existing consumers. Default off. Pass `functionReturnType: false` when you disable return types on `.tsx` via a local override. |
+| `explicitTypes` | Opt-in (`true` or per-rule toggles). Enables `consistent-type-assertions`, `consistent-type-imports`, `explicit-module-boundary-types`, and `explicit-function-return-type`. Default off. For React apps, prefer `@kristijorgji/eslint-config-react-typescript`, which turns `explicit-function-return-type` off for `.tsx`/`.jsx` when that rule is enabled (JSX return types are inferred). For non-React presets, pass `functionReturnType: false` or add a file-scoped override if you want the same relaxation. |
 
 ### Migration from hand-rolled configs
 
@@ -55,7 +55,7 @@ import {
 export default [
   createCodeQualityConfig(),
   createExplicitTypesConfig(),
-  // local .tsx override:
+  // Optional: relax internal return types in JSX files (createReactConfig does this).
   {
     files: ['**/*.{tsx,jsx}'],
     rules: { '@typescript-eslint/explicit-function-return-type': 'off' },

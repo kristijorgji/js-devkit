@@ -1,11 +1,23 @@
 import {
   createTypescriptConfig,
+  defaultExplicitTypesOptions,
   type CreateTypescriptConfigOptions,
+  type ExplicitTypesOptions,
 } from '@kristijorgji/eslint-config-typescript';
 import type { ESLint, Linter } from 'eslint';
 
 import type { SortJsxPropsOptions } from './jsx-props.js';
 import { createSharedReactConfigs } from './shared.js';
+
+function isFunctionReturnTypeEnabled(setting?: boolean | ExplicitTypesOptions): boolean {
+  if (setting === undefined || setting === false) {
+    return false;
+  }
+  if (setting === true) {
+    return defaultExplicitTypesOptions.functionReturnType;
+  }
+  return setting.functionReturnType ?? defaultExplicitTypesOptions.functionReturnType;
+}
 
 export type ReactConfigVariant = 'vite' | 'next';
 
@@ -156,6 +168,16 @@ export async function createReactConfig(
     }),
     ...createSharedReactConfigs({ extractionIgnores, jsxProps }),
   ];
+
+  // JSX return types are inferred; keep explicit-function-return-type for .ts only.
+  if (isFunctionReturnTypeEnabled(tsOptions.explicitTypes)) {
+    configs.push({
+      files: ['**/*.{tsx,jsx}'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'off',
+      },
+    });
+  }
 
   if (variant === 'vite') {
     configs.push(...(await loadVitePlugins({ storybook, a11y })));

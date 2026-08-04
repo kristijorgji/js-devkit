@@ -39,7 +39,7 @@ export interface BaseRulesOptions {
    */
   codeQuality?: boolean | CodeQualityOptions;
   /**
-   * Opt-in consistent-type-* and explicit-* typing rules shared by consumers.
+   * Opt-in consistent-type-* and explicit-* typing rules.
    * `true` enables defaults; an object toggles individual rules; omit / `false` leaves off.
    */
   explicitTypes?: boolean | ExplicitTypesOptions;
@@ -67,7 +67,7 @@ export function baseRules(options?: BaseRulesOptions): Linter.RulesRecord {
     // js.configs.recommended re-enables rules TypeScript already covers
     // (no-undef, no-redeclare, no-dupe-class-members, ...).
     ...tseslint.configs.eslintRecommended.rules,
-    // Deliberate deviations from eslint-recommended, matching both consumers:
+    // Deliberate deviations from eslint-recommended:
     // tsc only surfaces unreachable code as an editor suggestion unless
     // allowUnreachableCode: false is set, so keep the lint rule.
     'no-unreachable': 'error',

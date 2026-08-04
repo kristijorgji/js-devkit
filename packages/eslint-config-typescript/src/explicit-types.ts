@@ -18,7 +18,7 @@ export const defaultExplicitTypesOptions: Required<ExplicitTypesOptions> = {
   functionReturnType: true,
 };
 
-/** Option objects shared by both consumers (sb + prona). */
+/** Shared option objects for the explicitTypes group. */
 export const consistentTypeAssertionsOptions = {
   assertionStyle: 'as' as const,
   objectLiteralTypeAssertions: 'never' as const,

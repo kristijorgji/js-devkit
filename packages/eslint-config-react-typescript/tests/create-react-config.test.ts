@@ -74,4 +74,32 @@ describe('createReactConfig', () => {
       })
     ).rejects.toThrow(/Unknown React config variant/);
   });
+
+  it('explicitTypes turns explicit-function-return-type off for .tsx only', async () => {
+    const overrideConfig = await createReactConfig({
+      variant: 'vite',
+      tsconfigRootDir: viteFixture,
+      storybook: false,
+      prettier: false,
+      explicitTypes: true,
+    });
+
+    const tsxRules = await effectiveRules(overrideConfig, viteFixture, 'Sample.tsx');
+    expect(ruleSeverity(tsxRules['@typescript-eslint/explicit-function-return-type'])).toBe(0);
+
+    const tsRules = await effectiveRules(overrideConfig, viteFixture, 'Sample.ts');
+    expect(ruleSeverity(tsRules['@typescript-eslint/explicit-function-return-type'])).toBe(2);
+  });
+
+  it('omitting explicitTypes leaves explicit-function-return-type unset', async () => {
+    const overrideConfig = await createReactConfig({
+      variant: 'vite',
+      tsconfigRootDir: viteFixture,
+      storybook: false,
+      prettier: false,
+    });
+
+    const rules = await effectiveRules(overrideConfig, viteFixture, 'Sample.tsx');
+    expect(rules['@typescript-eslint/explicit-function-return-type']).toBeUndefined();
+  });
 });
