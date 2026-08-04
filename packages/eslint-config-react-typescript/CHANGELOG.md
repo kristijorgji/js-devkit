@@ -1,5 +1,16 @@
 # @kristijorgji/eslint-config-react-typescript
 
+## 2.1.0
+
+### Minor Changes
+
+- [#31](https://github.com/kristijorgji/js-devkit/pull/31) [`18636b0`](https://github.com/kristijorgji/js-devkit/commit/18636b0d320317ba3fb49b95a7cecdb7f768fcd0) Thanks [@kristijorgji](https://github.com/kristijorgji)! - When `explicitTypes` enables `explicit-function-return-type`, `createReactConfig` turns that rule off for `.tsx`/`.jsx` (JSX return types are inferred). Document the React-factory default and scrub private adopter names from public kit docs/comments/tests. Republishing react-config also floors the typescript-config dependency at the current workspace minor.
+
+### Patch Changes
+
+- Updated dependencies [[`18636b0`](https://github.com/kristijorgji/js-devkit/commit/18636b0d320317ba3fb49b95a7cecdb7f768fcd0)]:
+  - @kristijorgji/eslint-config-typescript@1.2.1
+
 ## 2.0.0
 
 ### Major Changes
