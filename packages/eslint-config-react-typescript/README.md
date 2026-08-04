@@ -44,13 +44,15 @@ export default await createReactConfig({
 | `storybook` | Vite only — Storybook flat recommended |
 | `a11y` | Optional `eslint-plugin-jsx-a11y` |
 | `jsxProps` | Options for `perfectionist/sort-jsx-props` (shallow merge); `false` disables |
+| `jsxExplicitFunctionReturnType` | When `explicitTypes` enables `explicit-function-return-type`, also apply it to `.tsx`/`.jsx`. Defaults to `false` (rule off for JSX; returns inferred). Set `true` to enforce in JSX files too. |
 | plus | All `createTypescriptConfig` options (`prettier`, `importOrder`, `sortImports`, `codeQuality`, `explicitTypes`, …) |
 
 Opt-in TypeScript groups (`codeQuality`, `explicitTypes`) are documented on
 [`@kristijorgji/eslint-config-typescript`](https://www.npmjs.com/package/@kristijorgji/eslint-config-typescript).
-When `explicitTypes` enables `explicit-function-return-type`, this factory turns
-that rule **off** for `**/*.{tsx,jsx}` so JSX return types stay inferred while
-`.ts` helpers remain annotated.
+By default, when `explicitTypes` enables `explicit-function-return-type`, this
+factory turns that rule **off** for `**/*.{tsx,jsx}` so JSX return types stay
+inferred while `.ts` helpers remain annotated. Pass
+`jsxExplicitFunctionReturnType: true` to keep the rule on for JSX files.
 
 ### Shared React rules
 

@@ -34,6 +34,12 @@ export interface CreateReactConfigOptions extends CreateTypescriptConfigOptions 
   extractionIgnores?: string[];
   /** `false` disables JSX prop sorting; an object shallow-merges over package defaults. */
   jsxProps?: false | SortJsxPropsOptions;
+  /**
+   * When `explicitTypes` enables `explicit-function-return-type`, also apply it
+   * to `.tsx`/`.jsx`. Defaults to `false` (rule off for JSX; returns inferred).
+   * Set `true` to enforce return types in JSX files as well.
+   */
+  jsxExplicitFunctionReturnType?: boolean;
 }
 
 type AnyPlugin = ESLint.Plugin;
@@ -158,6 +164,7 @@ export async function createReactConfig(
     a11y = false,
     extractionIgnores,
     jsxProps,
+    jsxExplicitFunctionReturnType = false,
     ...tsOptions
   } = options;
 
@@ -169,8 +176,8 @@ export async function createReactConfig(
     ...createSharedReactConfigs({ extractionIgnores, jsxProps }),
   ];
 
-  // JSX return types are inferred; keep explicit-function-return-type for .ts only.
-  if (isFunctionReturnTypeEnabled(tsOptions.explicitTypes)) {
+  // Default: JSX return types are inferred; keep explicit-function-return-type for .ts only.
+  if (isFunctionReturnTypeEnabled(tsOptions.explicitTypes) && !jsxExplicitFunctionReturnType) {
     configs.push({
       files: ['**/*.{tsx,jsx}'],
       rules: {
