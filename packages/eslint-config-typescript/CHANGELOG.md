@@ -1,5 +1,14 @@
 # @kristijorgji/eslint-config-typescript
 
+## 1.2.2
+
+### Patch Changes
+
+- [#33](https://github.com/kristijorgji/js-devkit/pull/33) [`fe02963`](https://github.com/kristijorgji/js-devkit/commit/fe029635c036e9a485d26017f643f075998ecf6b) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Add `jsxExplicitFunctionReturnType` so adopters can keep
+  `explicit-function-return-type` on for `.tsx`/`.jsx` when `explicitTypes`
+  enables that rule. Default remains `false` (rule off for JSX; returns inferred).
+  Document the option from the typescript-config README cross-link.
+
 ## 1.2.1
 
 ### Patch Changes

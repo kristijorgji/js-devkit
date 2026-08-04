@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/eslint-config-react-typescript",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Flat ESLint React TypeScript config factory (vite | next) on @kristijorgji/eslint-config-typescript",
   "type": "module",
   "license": "MIT",
