@@ -1,5 +1,11 @@
 # @kristijorgji/eslint-config-typescript
 
+## 1.2.0
+
+### Minor Changes
+
+- [#29](https://github.com/kristijorgji/js-devkit/pull/29) [`c655ec3`](https://github.com/kristijorgji/js-devkit/commit/c655ec3a5dc09892ff54d50b32ad17a9b2057823) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Restore typescript-eslint's `eslint-recommended` overrides in `baseRules` so TS-redundant core rules (`no-undef`, `no-redeclare`, `no-dupe-class-members`, …) stay disabled for `.ts`/`.tsx`, and add opt-in `codeQuality` / `explicitTypes` groups (with standalone `createCodeQualityConfig` / `createExplicitTypesConfig` for non-factory presets).
+
 ## 1.1.0
 
 ### Minor Changes
