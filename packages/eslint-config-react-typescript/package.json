@@ -82,7 +82,7 @@
     "eslint-plugin-react": "^7",
     "eslint-plugin-react-dom": "^5",
     "eslint-plugin-react-x": "^5",
-    "eslint-plugin-storybook": "^9",
+    "eslint-plugin-storybook": "^10",
     "prettier": "^3",
     "react": "^19.2.8",
     "typescript": "^5",
