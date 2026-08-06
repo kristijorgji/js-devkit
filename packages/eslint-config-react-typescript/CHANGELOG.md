@@ -1,5 +1,14 @@
 # @kristijorgji/eslint-config-react-typescript
 
+## 2.2.1
+
+### Patch Changes
+
+- [#43](https://github.com/kristijorgji/js-devkit/pull/43) [`ddc08e2`](https://github.com/kristijorgji/js-devkit/commit/ddc08e2cc196b45f3d4abd53d534f58615916b84) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Update rule-inventory snapshots for @eslint/js 10 default rules.
+
+- Updated dependencies [[`ddc08e2`](https://github.com/kristijorgji/js-devkit/commit/ddc08e2cc196b45f3d4abd53d534f58615916b84)]:
+  - @kristijorgji/eslint-config-typescript@1.2.3
+
 ## 2.2.0
 
 ### Minor Changes
