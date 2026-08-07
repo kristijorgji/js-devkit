@@ -157,7 +157,7 @@ importers:
     dependencies:
       '@typescript-eslint/utils':
         specifier: ^8
-        version: 8.65.0(eslint@10.8.0)(typescript@5.9.3)
+        version: 8.66.0(eslint@10.8.0)(typescript@5.9.3)
     devDependencies:
       '@types/estree':
         specifier: ^1
@@ -3097,7 +3097,7 @@ snapshots:
       '@eslint-react/var': 5.18.1(eslint@10.8.0)(typescript@5.9.3)
       '@typescript-eslint/scope-manager': 8.65.0
       '@typescript-eslint/types': 8.65.0
-      '@typescript-eslint/utils': 8.66.0(eslint@10.8.0)(typescript@5.9.3)
+      '@typescript-eslint/utils': 8.65.0(eslint@10.8.0)(typescript@5.9.3)
       eslint: 10.8.0
       ts-pattern: 5.9.0
       typescript: 5.9.3
@@ -3143,7 +3143,7 @@ snapshots:
       '@eslint-react/eslint': 5.18.1(eslint@10.8.0)(typescript@5.9.3)
       '@typescript-eslint/scope-manager': 8.65.0
       '@typescript-eslint/types': 8.65.0
-      '@typescript-eslint/utils': 8.66.0(eslint@10.8.0)(typescript@5.9.3)
+      '@typescript-eslint/utils': 8.65.0(eslint@10.8.0)(typescript@5.9.3)
       eslint: 10.8.0
       ts-pattern: 5.9.0
       typescript: 5.9.3
@@ -3416,7 +3416,7 @@ snapshots:
   '@typescript-eslint/project-service@8.65.0(typescript@5.9.3)':
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.65.0(typescript@5.9.3)
-      '@typescript-eslint/types': 8.66.0
+      '@typescript-eslint/types': 8.65.0
       debug: 4.4.3
       typescript: 5.9.3
     transitivePeerDependencies:
