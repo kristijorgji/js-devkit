@@ -22,7 +22,7 @@
     "@changesets/changelog-github": "^0.7.0",
     "@changesets/cli": "^2.29.4",
     "@types/node": "^26.2.0",
-    "eslint": "^10.8.0",
+    "eslint": "^10.8.1",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.66.0",
     "vitest": "^4.1.10"
