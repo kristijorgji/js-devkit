@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.0",
-    "@changesets/cli": "^2.29.4",
+    "@changesets/cli": "^3.0.0",
     "@types/node": "^26.2.0",
     "eslint": "^10.8.1",
     "typescript": "^5.8.3",
