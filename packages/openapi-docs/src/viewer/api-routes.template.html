@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>__VIEWER_TITLE__</title>
+  <style>
+<!-- VIEWER_STYLES -->
+  </style>
+</head>
+<body>
+  <h1>__VIEWER_TITLE__</h1>
+  <p class="subtitle">Generated local viewer — sort any column, filter by Method / Auth / Permissions, search Path and Description. Regenerate with <code>kj-openapi docs</code>.</p>
+
+  <div class="toolbar" id="toolbar"></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr id="head"></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+  <p class="footnote" id="footnote"></p>
+
+  <script>
+    const CATALOG = <!-- VIEWER_DATA -->;
+
+    function distinct(values) {
+      return [...new Set(values.filter(Boolean))].sort();
+    }
+
+    function buildToolbar(containerId, filters, onChange) {
+      const el = document.getElementById(containerId);
+      el.innerHTML = '';
+      for (const f of filters) {
+        const label = document.createElement('label');
+        label.textContent = f.label + ' ';
+        const control = f.type === 'search'
+          ? document.createElement('input')
+          : document.createElement('select');
+        if (f.type === 'search') {
+          control.type = 'search';
+          control.placeholder = f.placeholder ?? 'Search…';
+        } else {
+          const all = document.createElement('option');
+          all.value = '';
+          all.textContent = 'All';
+          control.appendChild(all);
+          for (const v of f.options) {
+            const opt = document.createElement('option');
+            opt.value = v;
+            opt.textContent = v;
+            control.appendChild(opt);
+          }
+        }
+        control.dataset.key = f.key;
+        control.addEventListener('input', onChange);
+        control.addEventListener('change', onChange);
+        label.appendChild(control);
+        el.appendChild(label);
+      }
+      const count = document.createElement('span');
+      count.className = 'count';
+      count.id = containerId + '-count';
+      el.appendChild(count);
+    }
+
+    function getFilterValues(toolbarId) {
+      const values = {};
+      document.getElementById(toolbarId).querySelectorAll('[data-key]').forEach((el) => {
+        const raw = el.value.trim();
+        values[el.dataset.key] = el.tagName === 'INPUT' ? raw.toLowerCase() : raw;
+      });
+      return values;
+    }
+
+    function matchesFilters(row, filters) {
+      if (filters.method && row.method !== filters.method) return false;
+      if (filters.authRequired && row.authRequired !== filters.authRequired) return false;
+      if (filters.permissionsRequired && row.permissionsRequired !== filters.permissionsRequired) return false;
+      if (filters.path && !row.path.toLowerCase().includes(filters.path)) return false;
+      if (filters.description && !row.description.toLowerCase().includes(filters.description)) return false;
+      return true;
+    }
+
+    function sortRows(rows, col, dir) {
+      return [...rows].sort((a, b) => {
+        const av = String(a[col] ?? '');
+        const bv = String(b[col] ?? '');
+        const cmp = av.localeCompare(bv, undefined, { numeric: true, sensitivity: 'base' });
+        return dir === 'asc' ? cmp : -cmp;
+      });
+    }
+
+    const columns = [
+      { key: 'method', label: 'Method', sortable: true },
+      { key: 'path', label: 'Path', code: true, sortable: true },
+      { key: 'authRequired', label: 'Auth Required', sortable: true },
+      { key: 'permissionsRequired', label: 'Permissions Required', sortable: true },
+      { key: 'description', label: 'Description', sortable: true },
+    ];
+
+    const rows = CATALOG.routes;
+    let sortCol = 'path';
+    let sortDir = 'asc';
+    const headRow = document.getElementById('head');
+
+    function paint() {
+      const filters = getFilterValues('toolbar');
+      let filtered = rows.filter((r) => matchesFilters(r, filters));
+      filtered = sortRows(filtered, sortCol, sortDir);
+      document.getElementById('toolbar-count').textContent =
+        filtered.length + ' / ' + rows.length + ' routes';
+
+      headRow.innerHTML = '';
+      for (const col of columns) {
+        const th = document.createElement('th');
+        th.textContent = col.label;
+        const sortable = col.sortable !== false;
+        let className = sortable ? 'th-sortable' : 'th-static';
+        if (sortable && col.key === sortCol) {
+          className += sortDir === 'asc' ? ' sorted-asc' : ' sorted-desc';
+        }
+        th.className = className;
+        if (sortable) {
+          th.addEventListener('click', () => {
+            if (sortCol === col.key) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+            else { sortCol = col.key; sortDir = 'asc'; }
+            paint();
+          });
+        }
+        headRow.appendChild(th);
+      }
+
+      const body = document.getElementById('body');
+      body.innerHTML = '';
+      for (const row of filtered) {
+        const tr = document.createElement('tr');
+        for (const col of columns) {
+          const td = document.createElement('td');
+          if (col.key === 'description') td.className = 'desc';
+          const val = row[col.key] ?? '';
+          if (col.code) {
+            const code = document.createElement('code');
+            code.textContent = val;
+            td.appendChild(code);
+          } else {
+            td.textContent = val;
+          }
+          tr.appendChild(td);
+        }
+        body.appendChild(tr);
+      }
+    }
+
+    buildToolbar('toolbar', [
+      { key: 'method', label: 'Method', options: distinct(rows.map((r) => r.method)) },
+      { key: 'authRequired', label: 'Auth', options: distinct(rows.map((r) => r.authRequired)) },
+      { key: 'permissionsRequired', label: 'Permissions', options: distinct(rows.map((r) => r.permissionsRequired)) },
+      { key: 'path', label: 'Path', type: 'search', placeholder: 'Filter path…' },
+      { key: 'description', label: 'Description', type: 'search', placeholder: 'Filter description…' },
+    ], paint);
+
+    document.getElementById('footnote').textContent = CATALOG.footnote ?? '';
+    paint();
+  </script>
+</body>
+</html>

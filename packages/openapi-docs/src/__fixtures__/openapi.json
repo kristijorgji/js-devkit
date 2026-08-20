@@ -1,0 +1,87 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Example API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "{{baseApiUrl}}/api/v1"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "tags": ["Root"],
+        "security": []
+      }
+    },
+    "/posts": {
+      "get": {
+        "summary": "List posts",
+        "tags": ["Posts"],
+        "security": [
+          { "bearerAuth": [] },
+          { "apiKeyAuth": [] }
+        ]
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "summary": "Get post",
+        "tags": ["Posts"],
+        "security": [
+          { "bearerAuth": [] },
+          { "apiKeyAuth": [] }
+        ]
+      },
+      "delete": {
+        "summary": "Delete post",
+        "tags": ["Posts"],
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
+    "/posts/{id}/approve": {
+      "patch": {
+        "summary": "Approve post",
+        "tags": ["Admin", "Posts"],
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login",
+        "tags": ["Auth"],
+        "security": []
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "summary": "Refresh",
+        "tags": ["Auth"],
+        "security": []
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "summary": "Logout",
+        "tags": ["Auth"],
+        "security": [{ "bearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    }
+  }
+}
