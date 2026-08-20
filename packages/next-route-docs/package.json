@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/next-route-docs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Generate a Next.js App Router route inventory (markdown, JSON, HTML) with declared-vs-built audit",
   "type": "module",
   "license": "MIT",
