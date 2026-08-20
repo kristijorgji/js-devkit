@@ -18,7 +18,7 @@ export interface ChunkGroup {
 }
 
 export interface PageOwnedChunks {
-    /** already-normalized route path, e.g. '/[locale]/properties' */
+    /** already-normalized route path, e.g. '/[locale]/posts' */
     normalizedPath: string;
     /** original manifest key when available */
     manifestKey: string;

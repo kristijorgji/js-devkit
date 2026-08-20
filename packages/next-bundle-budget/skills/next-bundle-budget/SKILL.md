@@ -24,7 +24,8 @@ Env: `TRACK_BUNDLE_HISTORY=1` records a snapshot after a passing `check`. `SKIP_
 
 ## Config files
 
-- `next-bundle-budget.config.ts` — `defineBundleBudgetConfig({ appRoot, extraGroups, resolveRouteName, ... })`
+- `next-bundle-budget.config.ts` — `defineBundleBudgetConfig({ appRoot, extraGroups, resolveRouteName, viewerTitle, ... })`.
+  `viewerTitle` sets the HTML history page title and heading (default `Bundle size history`).
 - `bundle-budgets.json` — `{ groups: { framework: { limit: "58 KB" } }, routes: { home: { limit: "10 KB" } } }`
 - `.size-limit.ts` — `export default buildSizeLimitEntries(config)`
 

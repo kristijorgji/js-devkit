@@ -30,6 +30,17 @@ pnpm add -D @kristijorgji/next-bundle-budget size-limit @size-limit/file
 
 `kj-next-bundle check` honors `TRACK_BUNDLE_HISTORY=1` and `SKIP_BUNDLE_TRACK=1`.
 
+Optional `viewerTitle` sets the HTML history page `<title>` and heading (default `Bundle size history`):
+
+```ts
+import { defineBundleBudgetConfig } from '@kristijorgji/next-bundle-budget/config';
+
+export default defineBundleBudgetConfig({
+  appRoot,
+  viewerTitle: 'Bundle size history — Acme',
+});
+```
+
 ## Commands
 
 | Command | Purpose |
