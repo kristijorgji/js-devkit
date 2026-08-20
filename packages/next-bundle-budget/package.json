@@ -1,0 +1,61 @@
+{
+  "name": "@kristijorgji/next-bundle-budget",
+  "version": "0.1.0",
+  "description": "Next.js bundle size budgets, history tracking and diff viewer",
+  "type": "module",
+  "license": "MIT",
+  "author": "kristijorgji",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "bin": {
+    "kj-next-bundle": "./dist/cli.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristijorgji/js-devkit.git",
+    "directory": "packages/next-bundle-budget"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./config": {
+      "types": "./dist/config/index.d.ts",
+      "import": "./dist/config/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/copy-assets.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@kristijorgji/cli-kit": "workspace:^",
+    "commander": "^14",
+    "jiti": "^2"
+  },
+  "peerDependencies": {
+    "@size-limit/file": "^11",
+    "next": "^15 || ^16",
+    "size-limit": "^11"
+  },
+  "devDependencies": {
+    "@types/node": "^26",
+    "typescript": "^5",
+    "vitest": "^4"
+  }
+}

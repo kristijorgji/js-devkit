@@ -2,7 +2,7 @@
   "name": "js-devkit",
   "private": true,
   "version": "0.0.0",
-  "description": "Shared ESLint rules and code-analysis tooling for TypeScript/JavaScript projects",
+  "description": "Shared TypeScript/JavaScript developer tooling",
   "license": "MIT",
   "author": "kristijorgji",
   "engines": {

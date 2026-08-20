@@ -1,0 +1,4 @@
+{
+  "polyfillFiles": ["static/chunks/polyfills-abc.js"],
+  "rootMainFiles": ["static/chunks/main-abc.js", "static/chunks/3220-deadbeef.js"]
+}
