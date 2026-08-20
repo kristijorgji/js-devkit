@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/next-bundle-budget",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Next.js bundle size budgets, history tracking and diff viewer",
   "type": "module",
   "license": "MIT",
