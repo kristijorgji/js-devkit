@@ -1,5 +1,11 @@
 # @kristijorgji/next-bundle-budget
 
+## 0.2.1
+
+### Patch Changes
+
+- [#70](https://github.com/kristijorgji/js-devkit/pull/70) [`af28723`](https://github.com/kristijorgji/js-devkit/commit/af2872311b7c3f0ff307eb1763cfd603581ccee8) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Remove consumer-specific branding and fixtures from the public package, and add a configurable `viewerTitle` for the HTML history page.
+
 ## 0.2.0
 
 ### Minor Changes
