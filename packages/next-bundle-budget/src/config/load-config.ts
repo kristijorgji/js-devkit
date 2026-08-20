@@ -45,6 +45,7 @@ export function resolveBundleBudgetConfig(config: BundleBudgetConfig): ResolvedB
         buildCommand: config.buildCommand ?? ['pnpm', 'exec', 'next', 'build'],
         prebuildCommands: config.prebuildCommands ?? [],
         hintCommand: config.hintCommand ?? 'kj-next-bundle sync-limits',
+        viewerTitle: config.viewerTitle?.trim() || 'Bundle size history',
     };
 }
 

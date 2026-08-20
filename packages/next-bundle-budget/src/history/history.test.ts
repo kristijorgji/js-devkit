@@ -23,7 +23,7 @@ function createSnapshot(overrides: Partial<BundleSnapshot> = {}): BundleSnapshot
         ],
         routes: [
             {
-                route: '/[locale]/dashboard/statistics',
+                route: '/[locale]/dashboard/analytics',
                 firstLoadUncompressedJsBytes: 100_000,
                 firstLoadChunkPaths: [],
             },
@@ -72,7 +72,7 @@ describe('computeRouteMovers', () => {
         const baseline = createSnapshot({
             routes: [
                 {
-                    route: '/[locale]/dashboard/statistics',
+                    route: '/[locale]/dashboard/analytics',
                     firstLoadUncompressedJsBytes: 100_000,
                     firstLoadChunkPaths: [],
                 },
@@ -81,7 +81,7 @@ describe('computeRouteMovers', () => {
         const current = createSnapshot({
             routes: [
                 {
-                    route: '/[locale]/dashboard/statistics',
+                    route: '/[locale]/dashboard/analytics',
                     firstLoadUncompressedJsBytes: 102_500,
                     firstLoadChunkPaths: [],
                 },

@@ -27,7 +27,7 @@ export function runHistory(config: ResolvedBundleBudgetConfig, options: HistoryO
     }
 
     const history = loadBundleHistory(historyPath);
-    const html = renderBundleHistoryHtml(history);
+    const html = renderBundleHistoryHtml(history, config.viewerTitle);
     const outputPath = resolveBundleViewerPath(config.historyDir);
     ensureBundleHistoryDir(config.historyDir);
     writeFileSync(outputPath, html, 'utf8');

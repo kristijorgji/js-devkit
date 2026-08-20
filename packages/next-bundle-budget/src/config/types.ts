@@ -29,6 +29,8 @@ export interface BundleBudgetConfig {
     prebuildCommands?: string[][];
     /** printed after track when static caps can be lowered */
     hintCommand?: string;
+    /** HTML viewer document title and heading. Default 'Bundle size history' */
+    viewerTitle?: string;
 }
 
 export interface BudgetEntry {
@@ -54,4 +56,5 @@ export interface ResolvedBundleBudgetConfig {
     buildCommand: string[];
     prebuildCommands: string[][];
     hintCommand: string;
+    viewerTitle: string;
 }
