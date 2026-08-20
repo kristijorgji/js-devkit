@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/openapi-docs",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Generate API route docs and a Postman collection from an OpenAPI document",
   "type": "module",
   "license": "MIT",
