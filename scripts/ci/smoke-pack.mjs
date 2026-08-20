@@ -183,7 +183,13 @@ try {
     }
 
     console.log(`smoke-pack ok: ${packageName} (${tarballs.length} tarball(s))`);
-} finally {
+    rmSync(packDir, { recursive: true, force: true });
+    // Leave consumerDir for the OS. Importing pino-backed packages starts a
+    // thread-stream worker; deleting node_modules before that worker exits
+    // crashes the process after a successful smoke test.
+    process.exit(0);
+} catch (error) {
     rmSync(packDir, { recursive: true, force: true });
     rmSync(consumerDir, { recursive: true, force: true });
+    throw error;
 }
