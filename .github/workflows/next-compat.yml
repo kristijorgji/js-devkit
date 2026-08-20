@@ -13,6 +13,7 @@ jobs:
       matrix:
         package:
           - '@kristijorgji/next-bundle-budget'
+          - '@kristijorgji/next-route-docs'
         next:
           - '15'
           - '16'

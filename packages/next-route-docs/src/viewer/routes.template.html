@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>__VIEWER_TITLE__</title>
+  <style>
+<!-- VIEWER_STYLES -->
+  </style>
+</head>
+<body>
+  <h1>__VIEWER_TITLE__</h1>
+  <p class="subtitle">Generated local viewer — sort columns, filter by Auth / Rendering / Indexable, search Path and Description. Regenerate with <code>kj-next-routes generate</code>.</p>
+
+  <h2>App pages</h2>
+  <div class="toolbar" id="app-toolbar"></div>
+  <div class="table-wrap">
+    <table id="app-table">
+      <thead><tr id="app-head"></tr></thead>
+      <tbody id="app-body"></tbody>
+    </table>
+  </div>
+
+  <h2>Metadata and infrastructure routes</h2>
+  <div class="toolbar" id="infra-toolbar"></div>
+  <div class="table-wrap">
+    <table id="infra-table">
+      <thead><tr id="infra-head"></tr></thead>
+      <tbody id="infra-body"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const CATALOG = <!-- VIEWER_DATA -->;
+
+    function distinct(values) {
+      return [...new Set(values.filter(Boolean))].sort();
+    }
+
+    function pathsDiffer(pathsByLocale, locales) {
+      const paths = locales.map((l) => pathsByLocale[l]);
+      const first = paths[0];
+      return paths.some((p) => p !== first);
+    }
+
+    function infraHasLocalePaths(pathsByLocale, locales) {
+      return locales.some((l) => {
+        const p = pathsByLocale[l];
+        return p && p !== '-';
+      });
+    }
+
+    function buildToolbar(containerId, filters, onChange, options) {
+      const el = document.getElementById(containerId);
+      el.innerHTML = '';
+      for (const f of filters) {
+        const label = document.createElement('label');
+        label.textContent = f.label + ' ';
+        const control = f.type === 'search'
+          ? document.createElement('input')
+          : document.createElement('select');
+        if (f.type === 'search') {
+          control.type = 'search';
+          control.placeholder = f.placeholder ?? 'Search…';
+        } else {
+          const all = document.createElement('option');
+          all.value = '';
+          all.textContent = 'All';
+          control.appendChild(all);
+          for (const v of f.options) {
+            const opt = document.createElement('option');
+            opt.value = v;
+            opt.textContent = v;
+            control.appendChild(opt);
+          }
+        }
+        control.dataset.key = f.key;
+        control.addEventListener('input', onChange);
+        control.addEventListener('change', onChange);
+        label.appendChild(control);
+        el.appendChild(label);
+      }
+      if (options?.localizedToggle) {
+        const localized = document.createElement('label');
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.id = containerId + '-localized';
+        cb.addEventListener('change', onChange);
+        localized.appendChild(cb);
+        localized.appendChild(document.createTextNode(' Localized paths only'));
+        el.appendChild(localized);
+      }
+      const count = document.createElement('span');
+      count.className = 'count';
+      count.id = containerId + '-count';
+      el.appendChild(count);
+    }
+
+    function getFilterValues(toolbarId) {
+      const values = {};
+      document.getElementById(toolbarId).querySelectorAll('[data-key]').forEach((el) => {
+        const raw = el.value.trim();
+        values[el.dataset.key] = el.tagName === 'INPUT' ? raw.toLowerCase() : raw;
+      });
+      const localizedCb = document.getElementById(toolbarId + '-localized');
+      values._localizedOnly = localizedCb?.checked ?? false;
+      return values;
+    }
+
+    function rowMatchesPathSearch(row, query, includeUrlPattern) {
+      if (!query) return true;
+      if (includeUrlPattern && row.urlPattern?.toLowerCase().includes(query)) return true;
+      const paths = row.pathsByLocale ?? {};
+      return (CATALOG.locales ?? []).some((l) => {
+        const p = paths[l];
+        return p && p !== '-' && p.toLowerCase().includes(query);
+      });
+    }
+
+    function createTableController(config) {
+      const { headId, bodyId, toolbarId, columns, rows, matchesRow, isLocalizedRow } = config;
+      const firstSortable = columns.find((c) => c.sortable !== false);
+      let sortCol = firstSortable?.key ?? columns[0].key;
+      let sortDir = 'asc';
+
+      const headRow = document.getElementById(headId);
+
+      function sortRows(filtered, col, dir) {
+        return [...filtered].sort((a, b) => {
+          const colDef = columns.find((c) => c.key === col);
+          const av = colDef?.render ? String(colDef.render(a) ?? '') : String(a[col] ?? '');
+          const bv = colDef?.render ? String(colDef.render(b) ?? '') : String(b[col] ?? '');
+          const cmp = av.localeCompare(bv, undefined, { numeric: true, sensitivity: 'base' });
+          return dir === 'asc' ? cmp : -cmp;
+        });
+      }
+
+      function paint() {
+        const filters = getFilterValues(toolbarId);
+        let filtered = rows.filter((r) => matchesRow(r, filters));
+        if (filters._localizedOnly) {
+          filtered = filtered.filter(isLocalizedRow);
+        }
+        filtered = sortRows(filtered, sortCol, sortDir);
+        document.getElementById(toolbarId + '-count').textContent =
+          filtered.length + ' / ' + rows.length + ' rows';
+
+        headRow.innerHTML = '';
+        for (const col of columns) {
+          const th = document.createElement('th');
+          th.textContent = col.label;
+          const sortable = col.sortable !== false;
+          let className = sortable ? 'th-sortable' : 'th-static';
+          if (sortable && col.key === sortCol) {
+            className += sortDir === 'asc' ? ' sorted-asc' : ' sorted-desc';
+          }
+          th.className = className;
+          if (sortable) {
+            th.addEventListener('click', () => {
+              if (sortCol === col.key) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+              else { sortCol = col.key; sortDir = 'asc'; }
+              paint();
+            });
+          }
+          headRow.appendChild(th);
+        }
+
+        const body = document.getElementById(bodyId);
+        body.innerHTML = '';
+        for (const row of filtered) {
+          const tr = document.createElement('tr');
+          for (const col of columns) {
+            const td = document.createElement('td');
+            if (col.key === 'description') td.className = 'desc';
+            const val = col.render ? col.render(row) : (row[col.key] ?? '');
+            if (col.code) {
+              const code = document.createElement('code');
+              code.textContent = val;
+              td.appendChild(code);
+            } else {
+              td.textContent = val;
+            }
+            tr.appendChild(td);
+          }
+          body.appendChild(tr);
+        }
+      }
+
+      return paint;
+    }
+
+    const locales = CATALOG.locales ?? [];
+    const localeCols = locales.map((l) => ({
+      key: 'path_' + l,
+      label: 'Path (' + l + ')',
+      locale: true,
+      sortable: false,
+      render: (row) => row.pathsByLocale?.[l] ?? '-',
+      code: true,
+    }));
+
+    const appRows = CATALOG.appPages ?? [];
+    const appColumns = [
+      { key: 'routeName', label: 'Logical route', sortable: true },
+      ...localeCols,
+      { key: 'auth', label: 'Auth', sortable: true },
+      { key: 'declared', label: 'Declared', sortable: true },
+      { key: 'rendering', label: 'Actual', sortable: true },
+      { key: 'indexable', label: 'Indexable', sortable: true },
+      { key: 'description', label: 'Description', sortable: true },
+    ];
+
+    function matchesAppRow(row, filters) {
+      if (filters.auth && row.auth !== filters.auth) return false;
+      if (filters.declared && row.declared !== filters.declared) return false;
+      if (filters.rendering && row.rendering !== filters.rendering) return false;
+      if (filters.indexable && row.indexable !== filters.indexable) return false;
+      if (filters.path && !rowMatchesPathSearch(row, filters.path, false)) return false;
+      if (filters.description && !row.description.toLowerCase().includes(filters.description)) return false;
+      return true;
+    }
+
+    const paintApp = createTableController({
+      headId: 'app-head',
+      bodyId: 'app-body',
+      toolbarId: 'app-toolbar',
+      columns: appColumns,
+      rows: appRows,
+      matchesRow: matchesAppRow,
+      isLocalizedRow: (row) => pathsDiffer(row.pathsByLocale ?? {}, locales),
+    });
+
+    buildToolbar('app-toolbar', [
+      { key: 'auth', label: 'Auth', options: distinct(appRows.map((r) => r.auth)) },
+      { key: 'declared', label: 'Declared', options: distinct(appRows.map((r) => r.declared)) },
+      { key: 'rendering', label: 'Actual', options: distinct(appRows.map((r) => r.rendering)) },
+      { key: 'indexable', label: 'Indexable', options: distinct(appRows.map((r) => r.indexable)) },
+      { key: 'path', label: 'Path', type: 'search', placeholder: 'Filter path…' },
+      { key: 'description', label: 'Description', type: 'search', placeholder: 'Filter description…' },
+    ], paintApp, { localizedToggle: locales.length > 0 });
+
+    const infraRows = CATALOG.infraRoutes ?? [];
+    const infraColumns = [
+      { key: 'methods', label: 'Method', sortable: true },
+      { key: 'urlPattern', label: 'URL pattern', code: true, sortable: true },
+      ...localeCols,
+      { key: 'kind', label: 'Kind', sortable: true },
+      { key: 'auth', label: 'Auth', sortable: true },
+      { key: 'rendering', label: 'Rendering', sortable: true },
+      { key: 'description', label: 'Description', sortable: true },
+    ];
+
+    function matchesInfraRow(row, filters) {
+      if (filters.auth && row.auth !== filters.auth) return false;
+      if (filters.rendering && row.rendering !== filters.rendering) return false;
+      if (filters.kind && row.kind !== filters.kind) return false;
+      if (filters.path && !rowMatchesPathSearch(row, filters.path, true)) return false;
+      if (filters.description && !row.description.toLowerCase().includes(filters.description)) return false;
+      return true;
+    }
+
+    const paintInfra = createTableController({
+      headId: 'infra-head',
+      bodyId: 'infra-body',
+      toolbarId: 'infra-toolbar',
+      columns: infraColumns,
+      rows: infraRows,
+      matchesRow: matchesInfraRow,
+      isLocalizedRow: (row) => infraHasLocalePaths(row.pathsByLocale ?? {}, locales),
+    });
+
+    buildToolbar('infra-toolbar', [
+      { key: 'auth', label: 'Auth', options: distinct(infraRows.map((r) => r.auth)) },
+      { key: 'rendering', label: 'Rendering', options: distinct(infraRows.map((r) => r.rendering)) },
+      { key: 'kind', label: 'Kind', options: distinct(infraRows.map((r) => r.kind)) },
+      { key: 'path', label: 'Path', type: 'search', placeholder: 'Filter path…' },
+      { key: 'description', label: 'Description', type: 'search', placeholder: 'Filter description…' },
+    ], paintInfra, { localizedToggle: locales.length > 0 });
+
+    paintApp();
+    paintInfra();
+  </script>
+</body>
+</html>
