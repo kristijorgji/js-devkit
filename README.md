@@ -1,6 +1,6 @@
 # js-devkit
 
-Shared ESLint rules and code-analysis tooling for TypeScript/JavaScript projects, published as scoped npm packages under `@kristijorgji/*`.
+Shared TypeScript/JavaScript developer tooling, published as scoped npm packages under `@kristijorgji/*`.
 
 ## Table of contents
 
@@ -22,6 +22,8 @@ Shared ESLint rules and code-analysis tooling for TypeScript/JavaScript projects
 | ------- | ------- | ---- |
 | [`@kristijorgji/eslint-plugin`](https://www.npmjs.com/package/@kristijorgji/eslint-plugin) | Custom ESLint rules under the `kj` namespace, plus config factories and `no-restricted-syntax` selector composers | [packages/eslint-plugin/README.md](packages/eslint-plugin/README.md) |
 | [`@kristijorgji/code-analysis`](https://www.npmjs.com/package/@kristijorgji/code-analysis) | `kj-analyze` CLI — test-mock duplication analysis and more | [packages/code-analysis/README.md](packages/code-analysis/README.md) |
+| [`@kristijorgji/cli-kit`](https://www.npmjs.com/package/@kristijorgji/cli-kit) | Shared CLI primitives: pino-pretty logger, table printer, spawn wrapper | [packages/cli-kit/README.md](packages/cli-kit/README.md) |
+| [`@kristijorgji/next-bundle-budget`](https://www.npmjs.com/package/@kristijorgji/next-bundle-budget) | Next.js bundle size budgets, history tracking, and HTML viewer (`kj-next-bundle`) | [packages/next-bundle-budget/README.md](packages/next-bundle-budget/README.md) |
 
 ## Requirements
 

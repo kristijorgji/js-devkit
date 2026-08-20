@@ -1,0 +1,7 @@
+[
+  {
+    "route": "/[locale]/properties",
+    "firstLoadUncompressedJsBytes": 120000,
+    "firstLoadChunkPaths": ["static/chunks/0cz1d0mv5g_q7.js", "static/chunks/page-properties.js"]
+  }
+]

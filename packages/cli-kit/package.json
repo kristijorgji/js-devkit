@@ -1,0 +1,47 @@
+{
+  "name": "@kristijorgji/cli-kit",
+  "version": "0.1.0",
+  "description": "Shared CLI primitives: pino-pretty logger, table printer, spawn wrapper",
+  "type": "module",
+  "license": "MIT",
+  "author": "kristijorgji",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristijorgji/js-devkit.git",
+    "directory": "packages/cli-kit"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "pino": "^9",
+    "pino-pretty": "^13"
+  },
+  "devDependencies": {
+    "@types/node": "^26",
+    "typescript": "^5",
+    "vitest": "^4"
+  }
+}

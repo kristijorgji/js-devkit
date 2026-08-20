@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bundle size history — Prona365</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --border: #334155;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --good: #34d399;
+      --bad: #fb7185;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+    }
+
+    h1, h2 { margin: 0 0 0.75rem; }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    select, button {
+      background: #111827;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+    }
+
+    canvas {
+      width: 100%;
+      max-height: 360px;
+      background: #111827;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { color: var(--muted); font-weight: 600; }
+
+    .mono { font-family: ui-monospace, SFMono-Regular, monospace; color: var(--accent); }
+
+    .chart-hint {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin: 0 0 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Bundle size history</h1>
+    <p class="subtitle">
+      Local timeline from <code>docs/generated/bundle-size/history.json</code>.
+      Brotli budgets are the commit gate; route sizes are uncompressed First Load JS estimates.
+      Snapshot times in the log table use your browser&apos;s local timezone.
+    </p>
+
+    <p id="trendHint" class="chart-hint" hidden>Trend lines appear after 2+ snapshots. A single snapshot shows its value as a point.</p>
+
+    <section class="panel">
+      <h2>Budget trend</h2>
+      <div class="controls">
+        <label>
+          Budget
+          <select id="budgetSelect"></select>
+        </label>
+      </div>
+      <canvas id="budgetChart" width="1100" height="360" aria-label="Budget trend chart"></canvas>
+    </section>
+
+    <section class="panel">
+      <h2>Route trend</h2>
+      <div class="controls">
+        <label>
+          Route
+          <select id="routeSelect"></select>
+        </label>
+      </div>
+      <canvas id="routeChart" width="1100" height="360" aria-label="Route trend chart"></canvas>
+    </section>
+
+    <section class="panel">
+      <h2>Snapshot log</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>When (local)</th>
+              <th>Commit</th>
+              <th>Branch</th>
+              <th>Message</th>
+              <th>Budget deltas</th>
+              <th>Top route movers</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const history = <!-- HISTORY_JSON -->;
+
+    function formatKb(bytes) {
+      return `${(bytes / 1024).toFixed(2)} KB`;
+    }
+
+    function formatSignedKb(bytes) {
+      const sign = bytes > 0 ? '+' : '';
+      return `${sign}${formatKb(bytes)}`;
+    }
+
+    function formatLocalTime(isoUtc) {
+      return new Date(isoUtc).toLocaleString(undefined, {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      });
+    }
+
+    function uniqueBudgetNames() {
+      const names = new Set();
+      history.forEach((entry) => entry.budgets.forEach((budget) => names.add(budget.name)));
+      return [...names].sort();
+    }
+
+    function uniqueRoutes() {
+      const routes = new Set();
+      history.forEach((entry) => entry.routes.forEach((route) => routes.add(route.route)));
+      return [...routes].sort();
+    }
+
+    function drawLineChart(canvas, labels, values, yLabel) {
+      const ctx = canvas.getContext('2d');
+      if (!ctx || values.length === 0) return;
+
+      const width = canvas.width;
+      const height = canvas.height;
+      const padding = 48;
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const range = Math.max(max - min, 1);
+
+      const pointCoords = values.map((value, index) => {
+        const x = padding + (index / Math.max(values.length - 1, 1)) * (width - padding * 2);
+        const y = height - padding - ((value - min) / range) * (height - padding * 2);
+        return { x, y, value };
+      });
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px sans-serif';
+      ctx.fillText(yLabel, 12, 20);
+
+      ctx.strokeStyle = '#334155';
+      ctx.beginPath();
+      ctx.moveTo(padding, height - padding);
+      ctx.lineTo(width - padding, height - padding);
+      ctx.moveTo(padding, padding);
+      ctx.lineTo(padding, height - padding);
+      ctx.stroke();
+
+      if (values.length === 1) {
+        const point = pointCoords[0];
+        if (!point) return;
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#e2e8f0';
+        ctx.fillText(formatKb(point.value), point.x + 10, point.y - 8);
+      } else {
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        pointCoords.forEach((point, index) => {
+          if (index === 0) ctx.moveTo(point.x, point.y);
+          else ctx.lineTo(point.x, point.y);
+        });
+        ctx.stroke();
+
+        ctx.fillStyle = '#38bdf8';
+        pointCoords.forEach((point) => {
+          ctx.beginPath();
+          ctx.arc(point.x, point.y, 4, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      ctx.fillStyle = '#e2e8f0';
+      labels.forEach((label, index) => {
+        if (index % Math.ceil(labels.length / 6) !== 0 && index !== labels.length - 1) return;
+        const point = pointCoords[index];
+        if (!point) return;
+        ctx.save();
+        ctx.translate(point.x, height - 12);
+        ctx.rotate(-0.4);
+        ctx.fillText(label, 0, 0);
+        ctx.restore();
+      });
+    }
+
+    function renderBudgetChart(name) {
+      const labels = history.map((entry) => `${entry.commitSha.slice(0, 7)}`);
+      const values = history.map((entry) => {
+        const budget = entry.budgets.find((item) => item.name === name);
+        return budget ? budget.sizeBytes : 0;
+      });
+      drawLineChart(document.getElementById('budgetChart'), labels, values, `${name} (Brotli)`);
+    }
+
+    function renderRouteChart(route) {
+      const labels = history.map((entry) => `${entry.commitSha.slice(0, 7)}`);
+      const values = history.map((entry) => {
+        const row = entry.routes.find((item) => item.route === route);
+        return row ? row.firstLoadUncompressedJsBytes : 0;
+      });
+      drawLineChart(document.getElementById('routeChart'), labels, values, `${route} (uncompressed)`);
+    }
+
+    function renderHistoryTable() {
+      const body = document.getElementById('historyBody');
+      const rows = [...history].reverse();
+      body.innerHTML = rows.map((entry) => {
+        const budgetSummary = (entry.comparison?.budgetDeltas ?? [])
+          .filter((row) => row.deltaBytes !== null && row.deltaBytes !== 0)
+          .slice(0, 3)
+          .map((row) => `${row.name}: ${formatSignedKb(row.deltaBytes)}`)
+          .join('<br>') || 'No budget changes';
+
+        const routeSummary = (entry.comparison?.routeMovers ?? [])
+          .slice(0, 3)
+          .map((row) => `${row.route}: ${formatSignedKb(row.deltaBytes ?? 0)}`)
+          .join('<br>') || 'No notable route movers';
+
+        return `<tr>
+          <td>${formatLocalTime(entry.timestamp)}</td>
+          <td class="mono">${entry.commitSha.slice(0, 7)}</td>
+          <td>${entry.branch}</td>
+          <td>${entry.commitMessage}</td>
+          <td>${budgetSummary}</td>
+          <td>${routeSummary}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    const budgetSelect = document.getElementById('budgetSelect');
+    const routeSelect = document.getElementById('routeSelect');
+    const budgetNames = uniqueBudgetNames();
+    const routes = uniqueRoutes();
+
+    budgetNames.forEach((name) => {
+      const option = document.createElement('option');
+      option.value = name;
+      option.textContent = name;
+      budgetSelect.appendChild(option);
+    });
+
+    routes.forEach((route) => {
+      const option = document.createElement('option');
+      option.value = route;
+      option.textContent = route;
+      routeSelect.appendChild(option);
+    });
+
+    budgetSelect.addEventListener('change', () => renderBudgetChart(budgetSelect.value));
+    routeSelect.addEventListener('change', () => renderRouteChart(routeSelect.value));
+
+    if (history.length < 2) {
+      document.getElementById('trendHint').hidden = false;
+    }
+
+    if (budgetNames[0]) renderBudgetChart(budgetNames[0]);
+    if (routes[0]) renderRouteChart(routes[0]);
+    renderHistoryTable();
+  </script>
+</body>
+</html>
