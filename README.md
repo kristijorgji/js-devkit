@@ -26,6 +26,7 @@ Shared TypeScript/JavaScript developer tooling, published as scoped npm packages
 | [`@kristijorgji/next-bundle-budget`](https://www.npmjs.com/package/@kristijorgji/next-bundle-budget) | Next.js bundle size budgets, history tracking, and HTML viewer (`kj-next-bundle`) | [packages/next-bundle-budget/README.md](packages/next-bundle-budget/README.md) |
 | [`@kristijorgji/docs-viewer`](https://www.npmjs.com/package/@kristijorgji/docs-viewer) | Shared HTML table-viewer shell for generated docs | [packages/docs-viewer/README.md](packages/docs-viewer/README.md) |
 | [`@kristijorgji/next-route-docs`](https://www.npmjs.com/package/@kristijorgji/next-route-docs) | Next.js App Router route inventory (`kj-next-routes`) | [packages/next-route-docs/README.md](packages/next-route-docs/README.md) |
+| [`@kristijorgji/openapi-docs`](https://www.npmjs.com/package/@kristijorgji/openapi-docs) | API route docs and Postman collection from OpenAPI (`kj-openapi`) | [packages/openapi-docs/README.md](packages/openapi-docs/README.md) |
 
 ## Requirements
 
