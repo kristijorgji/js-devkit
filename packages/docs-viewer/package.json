@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/docs-viewer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shared HTML table viewer shell for generated docs (title, styles, data injection)",
   "type": "module",
   "license": "MIT",
