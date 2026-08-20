@@ -23,6 +23,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+      - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm lint
       - name: Require changeset on package PRs
@@ -37,6 +38,40 @@ jobs:
           else
             echo "No packages/** changes; changeset not required."
           fi
+
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.list.outputs.packages }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: list
+        run: echo "packages=$(node scripts/ci/list-packages.mjs)" >> "$GITHUB_OUTPUT"
+
+  package:
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pkg: ${{ fromJSON(needs.discover.outputs.packages) }}
+    name: ${{ matrix.pkg.name }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6.0.10
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter ${{ matrix.pkg.name }}... build
+      - run: pnpm --filter ${{ matrix.pkg.name }} typecheck
+      - run: pnpm --filter ${{ matrix.pkg.name }} test
+      - run: pnpm dlx publint@latest
+        working-directory: packages/${{ matrix.pkg.dir }}
+      - run: pnpm dlx @arethetypeswrong/cli@latest --pack . --profile esm-only
+        working-directory: packages/${{ matrix.pkg.dir }}
+      - run: node scripts/ci/smoke-pack.mjs ${{ matrix.pkg.name }}
 
   plugin-compat:
     runs-on: ubuntu-latest
@@ -83,3 +118,12 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter ${{ matrix.package }}... build
       - run: pnpm --filter ${{ matrix.package }} test
+
+  ci-ok:
+    if: always()
+    needs: [build-test, package, plugin-compat, config-compat]
+    runs-on: ubuntu-latest
+    steps:
+      - if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1
+      - run: echo "all required jobs passed"

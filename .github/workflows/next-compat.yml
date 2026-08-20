@@ -1,0 +1,31 @@
+name: Next peer compat
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  next-compat:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - '@kristijorgji/next-bundle-budget'
+        next:
+          - '15'
+          - '16'
+    name: ${{ matrix.package }} next@${{ matrix.next }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6.0.10
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter ${{ matrix.package }}... build
+      - name: Install Next peer
+        run: pnpm --filter ${{ matrix.package }} add -D --no-lockfile next@${{ matrix.next }}
+      - run: pnpm --filter ${{ matrix.package }} test
