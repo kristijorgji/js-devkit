@@ -60,7 +60,8 @@ Nothing publishes on the first merge. The version PR is the review gate; merging
 
 ### GitHub Actions
 
-- [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — build, test, lint, changeset status, plugin peer matrix (`eslint@9+ts5` / `eslint@10+ts6`)
+- [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — workspace build/typecheck/test/lint, per-package matrix (`publint`, `attw`, pack smoke test), plugin peer matrix (`eslint@9+ts5` / `eslint@10+ts6`), `ci-ok` aggregation gate
+- [`.github/workflows/next-compat.yml`](.github/workflows/next-compat.yml) — nightly Next 15/16 peer matrix for Next-facing packages
 - [`.github/workflows/release.yml`](.github/workflows/release.yml) — Changesets action on push to `main`
 
 Maintainer one-time repo setup (Actions “create and approve PRs” toggle, npm Trusted Publishing, provenance): [docs/maintainer-release-setup.md](docs/maintainer-release-setup.md).
