@@ -1,0 +1,7 @@
+{
+  "version": 4,
+  "routes": {
+    "/en": { "initialRevalidateSeconds": 3600 }
+  },
+  "dynamicRoutes": {}
+}
