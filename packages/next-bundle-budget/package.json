@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@kristijorgji/cli-kit": "workspace:^",
-    "commander": "^14",
+    "commander": "^15",
     "jiti": "^2"
   },
   "peerDependencies": {
