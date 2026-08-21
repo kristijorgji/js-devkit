@@ -46,7 +46,7 @@
   "dependencies": {
     "@kristijorgji/cli-kit": "workspace:^",
     "@kristijorgji/docs-viewer": "workspace:^",
-    "commander": "^14",
+    "commander": "^15",
     "jiti": "^2",
     "openapi-to-postmanv2": "^6.0.1"
   },
