@@ -68,6 +68,6 @@
     "eslint": "^10",
     "prettier": "^3",
     "typescript": "^5",
-    "vitest": "^4"
+    "vitest": "^5"
   }
 }
