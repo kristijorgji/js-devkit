@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/static-asset-upload",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Framework-agnostic manifest uploader for static assets to S3-compatible object storage",
   "type": "module",
   "license": "MIT",
