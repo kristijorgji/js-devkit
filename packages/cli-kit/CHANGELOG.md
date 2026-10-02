@@ -1,5 +1,11 @@
 # @kristijorgji/cli-kit
 
+## 0.2.1
+
+### Patch Changes
+
+- Add a `default` export condition so Node/tsx can resolve the ESM entry besides the `import` condition.
+
 ## 0.2.0
 
 ### Minor Changes
