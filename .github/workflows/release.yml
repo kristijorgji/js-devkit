@@ -22,7 +22,8 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
-          registry-url: https://registry.npmjs.org
+          # Do not set registry-url: setup-node writes an .npmrc with
+          # _authToken=${NODE_AUTH_TOKEN}, which bypasses Trusted Publishing OIDC.
           package-manager-cache: false
       - name: Ensure npm supports Trusted Publishing
         run: |

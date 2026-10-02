@@ -52,7 +52,7 @@ Brand-new package names must exist on the registry (a first local or token publi
 - Use **npm ≥ 11.5.1** (Release installs `npm@11` globally; Node from `.nvmrc` is ≥ 22.14). Do not use `npm@latest` while it resolves to npm 12+, which requires Node `^22.22.2` / `^24.15` — newer than this repo’s `.nvmrc`.
 - **Not** set `NODE_AUTH_TOKEN` / `NPM_TOKEN` on the publish job — a present (even invalid) token bypasses OIDC and breaks Trusted Publishing
 
-`setup-node` may still set `registry-url: https://registry.npmjs.org`. Provenance is automatic under Trusted Publishing; packages also keep `"publishConfig": { "access": "public", "provenance": true }`.
+Do **not** set `registry-url` on `setup-node` in Release: that writes `_authToken=${NODE_AUTH_TOKEN}` into `.npmrc` and bypasses OIDC. Provenance is automatic under Trusted Publishing; packages also keep `"publishConfig": { "access": "public", "provenance": true }`.
 
 ### After Trusted Publishing works
 
