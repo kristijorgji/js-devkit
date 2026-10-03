@@ -296,6 +296,18 @@ importers:
         specifier: ^5
         version: 5.0.2(@types/node@26.6.3)(vite@7.3.6(@types/node@26.6.3)(jiti@2.7.0)(yaml@2.9.1))
 
+  packages/openapi-utils:
+    devDependencies:
+      '@types/node':
+        specifier: ^26
+        version: 26.6.3
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+      vitest:
+        specifier: ^5
+        version: 5.0.2(@types/node@26.6.3)(vite@7.3.6(@types/node@26.6.3)(jiti@2.7.0)(yaml@2.9.1))
+
   packages/static-asset-upload:
     dependencies:
       '@aws-sdk/client-s3':

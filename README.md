@@ -27,6 +27,7 @@ Shared TypeScript/JavaScript developer tooling, published as scoped npm packages
 | [`@kristijorgji/docs-viewer`](https://www.npmjs.com/package/@kristijorgji/docs-viewer) | Shared HTML table-viewer shell for generated docs | [packages/docs-viewer/README.md](packages/docs-viewer/README.md) |
 | [`@kristijorgji/next-route-docs`](https://www.npmjs.com/package/@kristijorgji/next-route-docs) | Next.js App Router route inventory (`kj-next-routes`) | [packages/next-route-docs/README.md](packages/next-route-docs/README.md) |
 | [`@kristijorgji/openapi-docs`](https://www.npmjs.com/package/@kristijorgji/openapi-docs) | API route docs and Postman collection from OpenAPI (`kj-openapi`) | [packages/openapi-docs/README.md](packages/openapi-docs/README.md) |
+| [`@kristijorgji/openapi-utils`](https://www.npmjs.com/package/@kristijorgji/openapi-utils) | Reusable OpenAPI helpers (versioned-spec merge first) | [packages/openapi-utils/README.md](packages/openapi-utils/README.md) |
 | [`@kristijorgji/static-asset-upload`](https://www.npmjs.com/package/@kristijorgji/static-asset-upload) | Manifest uploader for static assets to S3-compatible storage (`kj-static-assets`) | [packages/static-asset-upload/README.md](packages/static-asset-upload/README.md) |
 
 ## Requirements
