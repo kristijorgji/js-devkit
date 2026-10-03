@@ -1,7 +1,7 @@
 {
   "name": "@kristijorgji/openapi-utils",
   "version": "0.1.0",
-  "description": "Reusable OpenAPI helpers. First module merges versioned documents into one spec.",
+  "description": "Reusable OpenAPI helpers: versioned-spec merge and Hono route/docs helpers.",
   "type": "module",
   "license": "MIT",
   "author": "kristijorgji",
@@ -28,6 +28,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./hono": {
+      "types": "./dist/hono/index.d.ts",
+      "import": "./dist/hono/index.js",
+      "default": "./dist/hono/index.js"
     }
   },
   "types": "./dist/index.d.ts",
@@ -37,9 +42,33 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
+  "peerDependencies": {
+    "@hono/swagger-ui": "^0.6",
+    "@hono/zod-openapi": "^1",
+    "hono": "^4",
+    "zod": "^4"
+  },
+  "peerDependenciesMeta": {
+    "@hono/swagger-ui": {
+      "optional": true
+    },
+    "@hono/zod-openapi": {
+      "optional": true
+    },
+    "hono": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@hono/swagger-ui": "^0.6.1",
+    "@hono/zod-openapi": "^1.2.2",
     "@types/node": "^26",
+    "hono": "^4.12.8",
     "typescript": "^5",
-    "vitest": "^5"
+    "vitest": "^5",
+    "zod": "^4.3.6"
   }
 }
