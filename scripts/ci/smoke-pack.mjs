@@ -139,6 +139,15 @@ try {
 
     const installedRoot = installedPackageDir(consumerDir, packageName);
     const installedManifest = JSON.parse(readFileSync(join(installedRoot, 'package.json'), 'utf8'));
+    const optionalPeerSpecs = Object.entries(installedManifest.peerDependencies ?? {})
+        .filter(([name]) => installedManifest.peerDependenciesMeta?.[name]?.optional === true)
+        .map(([name, range]) => `${name}@${range}`);
+    if (optionalPeerSpecs.length > 0) {
+        execFileSync('npm', ['install', '--ignore-scripts', ...optionalPeerSpecs], {
+            cwd: consumerDir,
+            stdio: 'inherit',
+        });
+    }
     if (JSON.stringify(installedManifest).includes('workspace:')) {
         throw new Error(`${packageName} still contains a workspace: protocol after pack+install`);
     }
