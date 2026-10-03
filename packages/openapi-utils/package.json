@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/openapi-utils",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Reusable OpenAPI helpers. First module merges versioned documents into one spec.",
   "type": "module",
   "license": "MIT",
