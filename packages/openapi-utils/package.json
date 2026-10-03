@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/openapi-utils",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Reusable OpenAPI helpers: versioned-spec merge and Hono route/docs helpers.",
   "type": "module",
   "license": "MIT",
