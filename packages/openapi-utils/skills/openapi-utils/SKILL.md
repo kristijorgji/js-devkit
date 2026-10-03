@@ -1,8 +1,8 @@
 ---
 name: openapi-utils
 description: >-
-    Use when merging versioned OpenAPI documents, or adding another
-    framework-agnostic OpenAPI helper to @kristijorgji/openapi-utils.
+    Use when merging versioned OpenAPI documents, adding Hono OpenAPI helpers,
+    or adding another OpenAPI helper to @kristijorgji/openapi-utils.
 ---
 
 # openapi-utils
@@ -17,6 +17,17 @@ The first module is a versioned-spec merge. Example server variable: `{baseUrl}`
 
 `@kristijorgji/openapi-docs` generates route docs and Postman from one document. Do not fold that work into this package.
 
-## Out of scope (this version)
+## Hono
 
-Hono route registration, app server URLs, dump/fetch scripts, docs generation.
+Import from `@kristijorgji/openapi-utils/hono` (not the root entry):
+
+- `jsonContent`, `multipartFormContent`
+- `withOpenApi`
+- `createRouteAccessKit` (`createApiRoute`, `registerOpenAPIRoute`, `createAuthenticatedRouter`, `getRouteAccess`)
+- `buildBaseUrlServer`, `registerOpenApiDoc`
+
+The app passes auth middleware, the validation hook, and server hosts into the kit. The root entry stays dependency-free. Hono, Zod, and Swagger UI imports live only in `src/hono/`.
+
+## Out of scope
+
+Dump/fetch scripts, docs generation, app-specific auth, error schemas.
