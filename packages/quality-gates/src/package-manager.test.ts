@@ -7,7 +7,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { createPackageManager, detectPackageManager } from './package-manager.js';
 
 describe('package manager argv', () => {
-    it('pnpm matches Prona365 gate commands', () => {
+    it('pnpm argv for exec, scripts, and workspaces', () => {
         const pm = createPackageManager('pnpm');
         expect(pm.execBin('lint-staged')).toEqual({ cmd: 'pnpm', args: ['exec', 'lint-staged'] });
         expect(pm.execBin('lint-staged', ['--diff', 'HEAD'])).toEqual({

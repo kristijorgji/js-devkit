@@ -12,8 +12,8 @@ export function pnpmContext(overrides: Partial<GateContext> = {}): GateContext {
     };
 }
 
-/** Gate list matching Prona365's historical quality-gates.ts composition. */
-export function pronaLikeGates(): Gate[] {
+/** Example gate list using all four presets. */
+export function examplePresetGates(): Gate[] {
     return [
         lintStaged(),
         knip(),

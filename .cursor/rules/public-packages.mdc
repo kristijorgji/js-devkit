@@ -1,0 +1,11 @@
+---
+description: Keep published packages free of specific consumer apps
+globs: packages/**/*
+alwaysApply: false
+---
+
+# Public packages
+
+When adding or editing publishable packages, read and follow:
+
+- [.agents/skills/public-packages/SKILL.md](.agents/skills/public-packages/SKILL.md)
