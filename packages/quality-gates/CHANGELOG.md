@@ -1,5 +1,11 @@
 # @kristijorgji/quality-gates
 
+## 0.1.2
+
+### Patch Changes
+
+- [#219](https://github.com/kristijorgji/js-devkit/pull/219) [`1420bee`](https://github.com/kristijorgji/js-devkit/commit/1420bee69d39ffd8b76b4ee3bb2f8766680fa09c) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Drop consumer-specific names from quality-gates tests so the public package stays generic.
+
 ## 0.1.1
 
 ### Patch Changes
