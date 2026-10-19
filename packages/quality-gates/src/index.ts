@@ -1,4 +1,4 @@
-export { parseArgs, peekConfigPath, UsageError } from './args.js';
+export { isHelpOrVersion, parseArgs, peekConfigPath, UsageError } from './args.js';
 export type { CliArgs } from './args.js';
 export { runCli } from './run.js';
 export {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { CliArgs } from './args.js';
-import { UsageError, parseArgs, peekConfigPath } from './args.js';
+import { UsageError, isHelpOrVersion, parseArgs, peekConfigPath } from './args.js';
 
 const KNOWN = ['lint-staged', 'knip', 'typecheck', 'build', 'size-limit'];
 
@@ -27,6 +27,16 @@ describe('parseArgs', () => {
         [['--mode', 'working-tree', '--files', 'a.ts', '--gates', 'knip']],
     ])('rejects %j', (argv) => {
         expect(() => parseArgs(argv, KNOWN)).toThrow(UsageError);
+    });
+});
+
+describe('isHelpOrVersion', () => {
+    it('detects help and version flags', () => {
+        expect(isHelpOrVersion(['--help'])).toBe(true);
+        expect(isHelpOrVersion(['-h'])).toBe(true);
+        expect(isHelpOrVersion(['--version'])).toBe(true);
+        expect(isHelpOrVersion(['-V'])).toBe(true);
+        expect(isHelpOrVersion(['--mode', 'working-tree'])).toBe(false);
     });
 });
 

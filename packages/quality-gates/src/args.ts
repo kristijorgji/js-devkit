@@ -52,6 +52,10 @@ function validate({ mode, files, gates: gateIds, config }: ProgramOptions): CliA
     return { mode, files, gateIds, configPath: config };
 }
 
+export function isHelpOrVersion(argv: readonly string[]): boolean {
+    return argv.some((arg) => arg === '--help' || arg === '-h' || arg === '--version' || arg === '-V');
+}
+
 /** Parses user args (without the node/script prefix). Throws `UsageError` on invalid input. */
 export function parseArgs(argv: readonly string[], knownGateIds: readonly string[]): CliArgs {
     const program = buildProgram(knownGateIds);

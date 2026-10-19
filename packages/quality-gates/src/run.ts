@@ -6,7 +6,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { parseArgs, peekConfigPath } from './args.js';
+import { isHelpOrVersion, parseArgs, peekConfigPath } from './args.js';
 import { loadConfig } from './config/load-config.js';
 import type { ResolvedQualityGatesConfig } from './config/types.js';
 import {
@@ -39,6 +39,12 @@ function filesScopedIds(config: ResolvedQualityGatesConfig): Set<string> {
 }
 
 export async function runCli(argv: readonly string[] = process.argv.slice(2)): Promise<number> {
+    // Smoke-pack and `kj-quality-gates --help` run outside a git repo; do not touch git first.
+    if (isHelpOrVersion(argv)) {
+        parseArgs(argv, []);
+        return 0;
+    }
+
     const root = getRepoRoot(process.cwd());
     const config = await loadConfig(root, { configPath: peekConfigPath(argv) });
     const args = parseArgs(argv, config.gates.map((gate) => gate.id));
