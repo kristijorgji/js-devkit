@@ -84,7 +84,7 @@
     "eslint-plugin-react-x": "^5",
     "eslint-plugin-storybook": "^10",
     "prettier": "^3",
-    "react": "^19.3.0",
+    "react": "^19.3.1",
     "typescript": "^5",
     "vitest": "^5"
   }
