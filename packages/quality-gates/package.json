@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/quality-gates",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Configurable pre-commit and working-tree quality gate runner for JS monorepos",
   "type": "module",
   "license": "MIT",
