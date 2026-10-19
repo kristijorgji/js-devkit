@@ -1,16 +1,16 @@
 import { describe, expect, it } from 'vitest';
 
-import { pnpmContext, pronaLikeGates } from './test-helpers.js';
+import { examplePresetGates, pnpmContext } from './test-helpers.js';
 import type { Gate, GateCommand } from './types.js';
 import { knip } from './presets/knip.js';
 
 function gateById(id: string): Gate {
-    const gate = pronaLikeGates().find((candidate) => candidate.id === id);
+    const gate = examplePresetGates().find((candidate) => candidate.id === id);
     if (!gate) throw new Error(`missing gate ${id}`);
     return gate;
 }
 
-describe('preset pnpm argv (Prona365 lock)', () => {
+describe('preset pnpm argv', () => {
     it('pre-commit lint-staged uses the default staged flow', () => {
         expect(gateById('lint-staged').command(pnpmContext({ mode: 'pre-commit' }))).toEqual({
             cmd: 'pnpm',

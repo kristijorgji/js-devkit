@@ -3,12 +3,12 @@ import path from 'node:path';
 
 import { describe, expect, it, vi } from 'vitest';
 
-import { pnpmContext, pronaLikeGates } from './test-helpers.js';
+import { examplePresetGates, pnpmContext } from './test-helpers.js';
 import type { GateCommand, GateContext } from './types.js';
 import type { GateResult, GateStatus, PlannedGate, RunnerDeps, SpawnResult } from './runner.js';
 import { planGates, runGates, stripAnsi } from './runner.js';
 
-const GATES = pronaLikeGates();
+const GATES = examplePresetGates();
 
 function plannedIds(plan: readonly PlannedGate[]): string[] {
     return plan.map(({ gate }) => gate.id);
