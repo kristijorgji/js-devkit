@@ -19,4 +19,9 @@ describe('detectAdapter', () => {
     it('detects next16-webpack when only build-manifest.json is present', () => {
         expect(detectAdapter(join(fixtures, 'next16-webpack')).id).toBe('next16-webpack');
     });
+
+    it('detects pages-webpack when the manifest has pages-router keys', () => {
+        expect(detectAdapter(join(fixtures, 'pages-webpack')).id).toBe('pages-webpack');
+    });
 });
+

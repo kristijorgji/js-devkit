@@ -1,9 +1,15 @@
 import { next15WebpackAdapter } from './next15-webpack.js';
 import { next16TurbopackAdapter } from './next16-turbopack.js';
 import { next16WebpackAdapter } from './next16-webpack.js';
+import { pagesWebpackAdapter } from './pages-webpack.js';
 import type { AdapterId, NextBuildOutputAdapter } from './types.js';
 
-const ADAPTERS: NextBuildOutputAdapter[] = [next16TurbopackAdapter, next15WebpackAdapter, next16WebpackAdapter];
+const ADAPTERS: NextBuildOutputAdapter[] = [
+    next16TurbopackAdapter,
+    next15WebpackAdapter,
+    pagesWebpackAdapter,
+    next16WebpackAdapter,
+];
 
 export function getAdapterById(id: AdapterId): NextBuildOutputAdapter {
     const adapter = ADAPTERS.find((candidate) => candidate.id === id);
@@ -25,4 +31,4 @@ export function detectAdapter(distDir: string, explicit?: 'auto' | AdapterId): N
     return matched;
 }
 
-export { next15WebpackAdapter, next16TurbopackAdapter, next16WebpackAdapter };
+export { next15WebpackAdapter, next16TurbopackAdapter, next16WebpackAdapter, pagesWebpackAdapter };

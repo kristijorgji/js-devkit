@@ -35,6 +35,7 @@ Env: `TRACK_BUNDLE_HISTORY=1` records a snapshot after a passing `check`. `SKIP_
 
 | Adapter | Per-route budgets | Named runtime chunks (`framework-*.js`) |
 | --- | --- | --- |
+| `pages-webpack` | yes (`build-manifest.json` `pages`, including Next 12) | yes |
 | `next15-webpack` | yes (`app-build-manifest.json`) | yes |
 | `next16-turbopack` | yes (`.next/diagnostics/route-bundle-stats.json`, undocumented) | no — hashed names + `turbopack-*` |
 | `next16-webpack` | no — skip route layer with a warning | yes |

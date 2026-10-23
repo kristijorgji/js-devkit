@@ -1,0 +1,30 @@
+{
+    "polyfillFiles": ["static/chunks/polyfills-abc.js"],
+    "rootMainFiles": [],
+    "pages": {
+        "/_app": [
+            "static/chunks/webpack-runtime.js",
+            "static/chunks/framework-app.js",
+            "static/chunks/main-app.js",
+            "static/chunks/polyfills-abc.js",
+            "static/chunks/pages/_app-hash.js",
+            "static/chunks/999-vendor.js"
+        ],
+        "/": [
+            "static/chunks/webpack-runtime.js",
+            "static/chunks/framework-app.js",
+            "static/chunks/main-app.js",
+            "static/chunks/polyfills-abc.js",
+            "static/chunks/pages/_app-hash.js",
+            "static/chunks/999-vendor.js",
+            "static/chunks/pages/index-hash.js"
+        ],
+        "/_error": ["static/chunks/webpack-runtime.js", "static/chunks/pages/_error-hash.js"],
+        "/login": [
+            "static/chunks/webpack-runtime.js",
+            "static/chunks/framework-app.js",
+            "static/chunks/main-app.js",
+            "static/chunks/pages/login-hash.js"
+        ]
+    }
+}

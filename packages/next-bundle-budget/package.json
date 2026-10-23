@@ -6,7 +6,7 @@
   "license": "MIT",
   "author": "kristijorgji",
   "engines": {
-    "node": ">=22.16.0"
+    "node": ">=20.19.0"
   },
   "bin": {
     "kj-next-bundle": "./dist/cli.js"
@@ -50,7 +50,7 @@
   },
   "peerDependencies": {
     "@size-limit/file": "^11",
-    "next": "^15 || ^16",
+    "next": ">=12",
     "size-limit": "^11"
   },
   "devDependencies": {
