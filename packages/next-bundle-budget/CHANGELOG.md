@@ -1,5 +1,11 @@
 # @kristijorgji/next-bundle-budget
 
+## 0.3.0
+
+### Minor Changes
+
+- [#232](https://github.com/kristijorgji/js-devkit/pull/232) [`63d544a`](https://github.com/kristijorgji/js-devkit/commit/63d544a31ccef189f63bbee3e946239d31464804) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Measure pages-router webpack builds, including Next 12, accept Next 12 as a peer, and run the CLI on Node 20.19+.
+
 ## 0.2.1
 
 ### Patch Changes
