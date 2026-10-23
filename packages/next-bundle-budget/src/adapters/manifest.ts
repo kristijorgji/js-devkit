@@ -8,6 +8,8 @@ export interface AppBuildManifest {
 export interface BuildManifest {
     polyfillFiles?: string[];
     rootMainFiles?: string[];
+    /** Pages router client graph. Absent on App Router-only manifests. */
+    pages?: Record<string, string[]>;
 }
 
 export function readJsonFile<T>(path: string): T | null {

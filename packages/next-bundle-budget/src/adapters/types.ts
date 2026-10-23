@@ -1,4 +1,4 @@
-export type AdapterId = 'next15-webpack' | 'next16-turbopack' | 'next16-webpack';
+export type AdapterId = 'next15-webpack' | 'next16-turbopack' | 'next16-webpack' | 'pages-webpack';
 
 export interface AdapterCapabilities {
     /** false on next16-webpack: no app-build-manifest.json, no route-bundle-stats.json */

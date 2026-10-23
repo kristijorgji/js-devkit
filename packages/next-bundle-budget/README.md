@@ -2,7 +2,7 @@
 
 Next.js production bundle size budgets, history tracking, and an HTML timeline viewer.
 
-Works with Next 15 (webpack) and Next 16 (Turbopack / webpack) via a build-output adapter.
+Works with pages-router webpack builds (including Next 12), Next 15 (webpack), and Next 16 (Turbopack / webpack) via a build-output adapter.
 
 ## Install
 
