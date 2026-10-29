@@ -97,7 +97,7 @@ Logs: `<logDir>/<mode>/<gate-id>.txt` (default log dir `.quality-gates`). The di
 
 | Helper | Typical use |
 | --- | --- |
-| `lintStaged()` | `scope: 'files'`, isolated index; working-tree uses `--diff <diffBase\|HEAD>` (never pathspecs) |
+| `lintStaged()` | `scope: 'files'`, isolated index; working-tree uses `--diff <diffBase\|HEAD>` (implies `--no-stash`) plus `--no-hide-partially-staged` so lint-staged does not `git checkout --force` unstaged hunks. Hide is independent of stash. Pre-commit keeps lint-staged defaults. |
 | `knip({ via?: 'script' \| 'bin' })` | Default `via: 'script'` → `pnpm knip` |
 | `turboTask({ id, task, modes?, dependsOn?, affected? })` | Default `affected: true` → `--filter=...[HEAD]` when HEAD exists |
 | `workspaceScript({ id, workspace, script, whenChanged?, envByMode?, dependsOn? })` | Filter by changed-path prefixes; optional env per mode |
