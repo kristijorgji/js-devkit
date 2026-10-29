@@ -9,7 +9,10 @@ export function lintStaged(options: { id?: string } = {}): Gate {
         scope: 'files',
         isolatedIndex: true,
         command: (ctx) => {
-            const extra = ctx.mode === 'pre-commit' ? [] : ['--diff', ctx.diffBase ?? 'HEAD'];
+            const extra =
+                ctx.mode === 'pre-commit'
+                    ? []
+                    : ['--diff', ctx.diffBase ?? 'HEAD', '--no-hide-partially-staged'];
             return ctx.packageManager.execBin('lint-staged', extra);
         },
     };

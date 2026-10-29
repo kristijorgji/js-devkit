@@ -114,7 +114,13 @@ describe('runGates', () => {
         expect(working.deps.calls[0]?.env).toEqual({
             GIT_INDEX_FILE: '/tmp/isolated.index',
         } satisfies GateCommand['env']);
-        expect(working.deps.calls[0]?.args).toEqual(['exec', 'lint-staged', '--diff', 'tree-sha']);
+        expect(working.deps.calls[0]?.args).toEqual([
+            'exec',
+            'lint-staged',
+            '--diff',
+            'tree-sha',
+            '--no-hide-partially-staged',
+        ]);
         const preCommit = await run({}, { ...webChange, mode: 'pre-commit' }, true);
         expect(preCommit.deps.calls[0]?.env).toEqual({} satisfies GateCommand['env']);
     });

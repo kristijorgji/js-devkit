@@ -20,12 +20,19 @@ describe('preset pnpm argv', () => {
 
     it('working-tree lint-staged diffs against HEAD or the scoped diff base, never pathspecs', () => {
         const lintStagedGate = gateById('lint-staged');
-        expect(lintStagedGate.command(pnpmContext()).args).toEqual(['exec', 'lint-staged', '--diff', 'HEAD']);
+        expect(lintStagedGate.command(pnpmContext()).args).toEqual([
+            'exec',
+            'lint-staged',
+            '--diff',
+            'HEAD',
+            '--no-hide-partially-staged',
+        ]);
         expect(lintStagedGate.command(pnpmContext({ files: ['a.ts'], diffBase: 'abc123' })).args).toEqual([
             'exec',
             'lint-staged',
             '--diff',
             'abc123',
+            '--no-hide-partially-staged',
         ]);
     });
 
