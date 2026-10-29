@@ -1,5 +1,11 @@
 # @kristijorgji/quality-gates
 
+## 0.1.3
+
+### Patch Changes
+
+- [#244](https://github.com/kristijorgji/js-devkit/pull/244) [`ee6e091`](https://github.com/kristijorgji/js-devkit/commit/ee6e09128d281bdc0bfb63ba24e1bf9ac5c35318) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Working-tree lint-staged passes `--no-hide-partially-staged` so partially staged files are linted on disk.
+
 ## 0.1.2
 
 ### Patch Changes
