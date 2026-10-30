@@ -48,7 +48,7 @@
     "@kristijorgji/docs-viewer": "workspace:^",
     "commander": "^15",
     "jiti": "^2",
-    "openapi-to-postmanv2": "^6.4.0"
+    "openapi-to-postmanv2": "^6.4.2"
   },
   "devDependencies": {
     "@types/node": "^26",
