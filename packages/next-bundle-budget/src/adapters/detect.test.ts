@@ -16,6 +16,10 @@ describe('detectAdapter', () => {
         expect(detectAdapter(join(fixtures, 'next16-turbopack')).id).toBe('next16-turbopack');
     });
 
+    it('detects next16-turbopack from turbopack runtime chunks on pages-router output', () => {
+        expect(detectAdapter(join(fixtures, 'next16-turbopack-pages')).id).toBe('next16-turbopack');
+    });
+
     it('detects next16-webpack when only build-manifest.json is present', () => {
         expect(detectAdapter(join(fixtures, 'next16-webpack')).id).toBe('next16-webpack');
     });
