@@ -1,5 +1,11 @@
 # @kristijorgji/next-bundle-budget
 
+## 0.3.1
+
+### Patch Changes
+
+- [#252](https://github.com/kristijorgji/js-devkit/pull/252) [`17b5925`](https://github.com/kristijorgji/js-devkit/commit/17b5925afaf5fe0dfb39116f64587a5bedafc44b) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Fix the Next 16 Turbopack adapter on pages-router builds: read page-owned chunks from build-manifest.json when /_app is present (route-bundle-stats.json is first-load, not page-owned), fall back shared vendor to /_app, and strip a leading .next/ so size-limit globs are not doubled.
+
 ## 0.3.0
 
 ### Minor Changes
