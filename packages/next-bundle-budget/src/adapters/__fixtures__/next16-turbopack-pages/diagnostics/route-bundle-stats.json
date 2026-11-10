@@ -1,0 +1,11 @@
+[
+    {
+        "route": "/",
+        "firstLoadUncompressedJsBytes": 240000,
+        "firstLoadChunkPaths": [
+            ".next/static/chunks/aaaa-shared.js",
+            ".next/static/chunks/page-index.js",
+            ".next/static/chunks/turbopack-runtime.js"
+        ]
+    }
+]

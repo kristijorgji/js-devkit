@@ -2,7 +2,7 @@
 
 Next.js production bundle size budgets, history tracking, and an HTML timeline viewer.
 
-Works with pages-router webpack builds (including Next 12), Next 15 (webpack), and Next 16 (Turbopack / webpack) via a build-output adapter.
+Works with pages-router webpack builds (including Next 12), Next 15 (webpack), and Next 16 (Turbopack / webpack) via a build-output adapter. On Next 16 Turbopack, pages-router builds read page-owned chunks from `build-manifest.json` `pages` when `/_app` is present; App Router builds use `diagnostics/route-bundle-stats.json`.
 
 ## Install
 

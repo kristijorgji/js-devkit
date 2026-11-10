@@ -1,0 +1,14 @@
+{
+    "polyfillFiles": [],
+    "rootMainFiles": [],
+    "pages": {
+        "/_app": [".next/static/chunks/turbopack-runtime.js", "static/chunks/aaaa-shared.js"],
+        "/": [
+            ".next/static/chunks/turbopack-runtime.js",
+            "static/chunks/aaaa-shared.js",
+            ".next/static/chunks/page-index.js"
+        ],
+        "/_error": ["static/chunks/page-error.js"],
+        "/login": ["static/chunks/aaaa-shared.js", "static/chunks/page-login.js"]
+    }
+}

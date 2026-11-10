@@ -21,6 +21,17 @@ interface FunctionsConfigManifest {
     functions?: Record<string, { runtime?: string }>;
 }
 
+const SKIPPED_PAGE_KEYS = new Set(['/_app', '/_error', '/_document']);
+
+function stripDistPrefix(chunkPath: string): string {
+    return chunkPath.replace(/^\.next\//, '');
+}
+
+function isClientJsChunk(chunkPath: string): boolean {
+    const filename = basename(chunkPath);
+    return filename.endsWith('.js') && !filename.startsWith('turbopack-');
+}
+
 function readBuildId(distDir: string): string | null {
     const path = join(distDir, 'BUILD_ID');
     if (!existsSync(path)) {
@@ -47,13 +58,15 @@ function resolveSharedVendorChunks(distDir: string): SharedVendorChunk[] {
     const manifest = readBuildManifest(distDir);
     const chunksDir = join(distDir, 'static/chunks');
     const rootMainFiles = manifest?.rootMainFiles ?? [];
-    if (rootMainFiles.length === 0 || !existsSync(chunksDir)) {
+    const appFiles = (manifest?.pages?.['/_app'] ?? []).filter(isClientJsChunk);
+    const sharedFiles = rootMainFiles.length > 0 ? rootMainFiles : appFiles;
+    if (sharedFiles.length === 0 || !existsSync(chunksDir)) {
         return [];
     }
 
-    return rootMainFiles
+    return sharedFiles
         .map((chunkPath) => {
-            const filename = basename(chunkPath);
+            const filename = basename(stripDistPrefix(chunkPath));
             if (!filename.endsWith('.js') || filename.startsWith('turbopack-')) {
                 return null;
             }
@@ -148,7 +161,7 @@ function listChunkGroups(distDir: string): ChunkGroup[] {
     return groups;
 }
 
-function listPageOwnedChunks(distDir: string): PageOwnedChunks[] {
+function listPageOwnedChunksFromStats(distDir: string): PageOwnedChunks[] {
     const stats = readJsonFile<RouteBundleStat[]>(join(distDir, 'diagnostics/route-bundle-stats.json'));
     if (!stats) {
         return [];
@@ -159,9 +172,47 @@ function listPageOwnedChunks(distDir: string): PageOwnedChunks[] {
         .map((row) => ({
             manifestKey: row.route,
             normalizedPath: normalizeAppPath(row.route),
-            chunkPaths: row.firstLoadChunkPaths ?? [],
+            chunkPaths: (row.firstLoadChunkPaths ?? []).map(stripDistPrefix),
         }))
         .sort((left, right) => left.normalizedPath.localeCompare(right.normalizedPath));
+}
+
+function listPageOwnedChunksFromPagesManifest(distDir: string): PageOwnedChunks[] {
+    const pageEntries = readBuildManifest(distDir)?.pages ?? {};
+    const appFiles = new Set((pageEntries['/_app'] ?? []).map(stripDistPrefix));
+    const rows: PageOwnedChunks[] = [];
+
+    for (const [manifestKey, rawChunkPaths] of Object.entries(pageEntries)) {
+        if (SKIPPED_PAGE_KEYS.has(manifestKey)) {
+            continue;
+        }
+
+        const chunkPaths = [
+            ...new Set(
+                (rawChunkPaths ?? []).map(stripDistPrefix).filter((chunkPath) => {
+                    return isClientJsChunk(chunkPath) && !appFiles.has(chunkPath);
+                }),
+            ),
+        ];
+
+        rows.push({
+            manifestKey,
+            normalizedPath: normalizeAppPath(manifestKey),
+            chunkPaths,
+        });
+    }
+
+    return rows.sort((left, right) => left.normalizedPath.localeCompare(right.normalizedPath));
+}
+
+function listPageOwnedChunks(distDir: string): PageOwnedChunks[] {
+    const pageEntries = readBuildManifest(distDir)?.pages ?? {};
+    // Pages-router Turbopack still writes route-bundle-stats.json, but those
+    // firstLoadChunkPaths are shared + page. Prefer build-manifest `pages`.
+    if (Array.isArray(pageEntries['/_app'])) {
+        return listPageOwnedChunksFromPagesManifest(distDir);
+    }
+    return listPageOwnedChunksFromStats(distDir);
 }
 
 export const next16TurbopackAdapter: NextBuildOutputAdapter = {
