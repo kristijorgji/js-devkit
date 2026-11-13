@@ -1,5 +1,11 @@
 # @kristijorgji/next-route-docs
 
+## 0.2.1
+
+### Patch Changes
+
+- [#254](https://github.com/kristijorgji/js-devkit/pull/254) [`428abf7`](https://github.com/kristijorgji/js-devkit/commit/428abf712c8ecda7fef15bd5cc61f54e3e931e3f) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Parse numeric separators in `export const revalidate` (e.g. `86_400` → 86400) so route docs ISR labels are correct.
+
 ## 0.2.0
 
 ### Minor Changes
