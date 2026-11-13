@@ -24,6 +24,12 @@ describe('parseRouteSource', () => {
         expect(formatPageRendering(parsed)).toBe('On-demand ISR (3600s)');
     });
 
+    it('parses numeric separators in revalidate', () => {
+        const parsed = parseRouteSource(`export const revalidate = 86_400;`);
+        expect(parsed.revalidateSeconds).toBe(86400);
+        expect(formatPageRendering(parsed)).toBe('On-demand ISR (86400s)');
+    });
+
     it('does not let revalidate mask searchParams', () => {
         const parsed = parseRouteSource(`
             export const revalidate = 300;

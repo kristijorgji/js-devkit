@@ -32,13 +32,16 @@ function stripSourceComments(source: string): string {
 export function parseRouteSource(source: string): ParsedRouteExports {
     const code = stripSourceComments(source);
     const revalidateFalse = /export\s+const\s+revalidate\s*=\s*false\b/.test(code);
-    const revalidateMatch = code.match(/export\s+const\s+revalidate\s*=\s*(\d+)/);
+    const revalidateMatch = code.match(/export\s+const\s+revalidate\s*=\s*((?:\d|_)+)/);
+    const revalidateLiteral = revalidateMatch?.[1];
+    const revalidateSeconds =
+        revalidateLiteral !== undefined ? Number(revalidateLiteral.replaceAll('_', '')) : undefined;
     const dynamicMatch = code.match(/export\s+const\s+dynamic\s*=\s*['"]([^'"]+)['"]/);
     const runtimeMatch = code.match(/export\s+const\s+runtime\s*=\s*['"]([^'"]+)['"]/);
 
     return {
-        ...(revalidateMatch ? { revalidateSeconds: Number(revalidateMatch[1]) } : {}),
-        ...(revalidateFalse || revalidateMatch?.[1] === '0' ? { revalidateDisabled: true } : {}),
+        ...(revalidateSeconds !== undefined && !Number.isNaN(revalidateSeconds) ? { revalidateSeconds } : {}),
+        ...(revalidateFalse || revalidateSeconds === 0 ? { revalidateDisabled: true } : {}),
         hasGenerateStaticParams: /export\s+(?:async\s+)?function\s+generateStaticParams/.test(code),
         hasSearchParams: /\bsearchParams\b/.test(code),
         hasDynamicApis: /\b(?:cookies|headers|draftMode|connection)\s*\(/.test(code),
