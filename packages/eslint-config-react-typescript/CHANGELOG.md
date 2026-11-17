@@ -1,5 +1,11 @@
 # @kristijorgji/eslint-config-react-typescript
 
+## 2.3.0
+
+### Minor Changes
+
+- [#259](https://github.com/kristijorgji/js-devkit/pull/259) [`38310f3`](https://github.com/kristijorgji/js-devkit/commit/38310f319c89692ebf78de60226f95f7a1a36787) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Include `@next/next/no-location-assign-relative-destination` from `@next/eslint-plugin-next` 16.4.
+
 ## 2.2.1
 
 ### Patch Changes
