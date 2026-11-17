@@ -1,0 +1,42 @@
+{
+  "locales": ["en", "sq"],
+  "appPages": [
+    {
+      "routeName": "home",
+      "pathsByLocale": {
+        "en": "/en",
+        "sq": "/sq"
+      },
+      "indexable": "Yes"
+    },
+    {
+      "routeName": "detail",
+      "pathsByLocale": {
+        "en": "/en/properties/[slug]",
+        "sq": "/sq/listings/[slug]"
+      },
+      "indexable": "Yes"
+    },
+    {
+      "routeName": "memberHome",
+      "pathsByLocale": {
+        "sq": "/sq/anetaret/[slug]"
+      },
+      "indexable": "Yes"
+    },
+    {
+      "routeName": "cityPillar",
+      "pathsByLocale": {
+        "en": "/en/[country]/[city]"
+      },
+      "indexable": "Yes"
+    },
+    {
+      "routeName": "countryPillar",
+      "pathsByLocale": {
+        "en": "/en/[country]"
+      },
+      "indexable": "Yes"
+    }
+  ]
+}

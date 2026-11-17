@@ -30,6 +30,7 @@ Shared TypeScript/JavaScript developer tooling, published as scoped npm packages
 | [`@kristijorgji/openapi-utils`](https://www.npmjs.com/package/@kristijorgji/openapi-utils) | Reusable OpenAPI helpers (versioned-spec merge first) | [packages/openapi-utils/README.md](packages/openapi-utils/README.md) |
 | [`@kristijorgji/static-asset-upload`](https://www.npmjs.com/package/@kristijorgji/static-asset-upload) | Manifest uploader for static assets to S3-compatible storage (`kj-static-assets`) | [packages/static-asset-upload/README.md](packages/static-asset-upload/README.md) |
 | [`@kristijorgji/quality-gates`](https://www.npmjs.com/package/@kristijorgji/quality-gates) | Configurable pre-commit and working-tree quality gate runner (`kj-quality-gates`) | [packages/quality-gates/README.md](packages/quality-gates/README.md) |
+| [`@kristijorgji/seo-audit`](https://www.npmjs.com/package/@kristijorgji/seo-audit) | Sitemap, robots.txt and rendered-page SEO audit (`kj-seo`) | [packages/seo-audit/README.md](packages/seo-audit/README.md) |
 
 ## Requirements
 
