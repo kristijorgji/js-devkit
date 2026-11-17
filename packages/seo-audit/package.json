@@ -1,6 +1,6 @@
 {
   "name": "@kristijorgji/seo-audit",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Sitemap, robots.txt and rendered-page SEO audit CLI with HTML report (kj-seo)",
   "type": "module",
   "license": "MIT",
