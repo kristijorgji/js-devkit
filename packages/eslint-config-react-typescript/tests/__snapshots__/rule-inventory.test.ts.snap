@@ -17,6 +17,7 @@ exports[`rule inventory snapshot > next variant with storybook false 1`] = `
     "@next/next/no-head-import-in-document",
     "@next/next/no-html-link-for-pages",
     "@next/next/no-img-element",
+    "@next/next/no-location-assign-relative-destination",
     "@next/next/no-page-custom-font",
     "@next/next/no-script-component-in-head",
     "@next/next/no-styled-jsx-in-document",
