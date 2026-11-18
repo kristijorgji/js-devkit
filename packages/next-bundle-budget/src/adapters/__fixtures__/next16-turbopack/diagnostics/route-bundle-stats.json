@@ -2,6 +2,19 @@
   {
     "route": "/[locale]/posts",
     "firstLoadUncompressedJsBytes": 120000,
-    "firstLoadChunkPaths": ["static/chunks/aaaa1111.js", "static/chunks/page-posts.js"]
+    "firstLoadChunkPaths": [
+      "static/chunks/aaaa1111.js",
+      "static/chunks/turbopack-runtime-demo.js",
+      "static/chunks/page-posts.js"
+    ]
+  },
+  {
+    "route": "/[locale]",
+    "firstLoadUncompressedJsBytes": 110000,
+    "firstLoadChunkPaths": [
+      "static/chunks/aaaa1111.js",
+      "static/chunks/turbopack-runtime-demo.js",
+      "static/chunks/page-home.js"
+    ]
   }
 ]
