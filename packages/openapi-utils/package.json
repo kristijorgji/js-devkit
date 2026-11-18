@@ -63,7 +63,7 @@
     }
   },
   "devDependencies": {
-    "@hono/swagger-ui": "^0.6.1",
+    "@hono/swagger-ui": "^0.6.2",
     "@hono/zod-openapi": "^1.2.2",
     "@types/node": "^26",
     "hono": "^4.13.13",

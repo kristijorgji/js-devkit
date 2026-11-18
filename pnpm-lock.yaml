@@ -299,8 +299,8 @@ importers:
   packages/openapi-utils:
     devDependencies:
       '@hono/swagger-ui':
-        specifier: ^0.6.1
-        version: 0.6.1(hono@4.13.13)
+        specifier: ^0.6.2
+        version: 0.6.2(hono@4.13.13)
       '@hono/zod-openapi':
         specifier: ^1.2.2
         version: 1.6.3(hono@4.13.13)(zod@4.6.7)
@@ -927,8 +927,8 @@ packages:
   '@formatjs/intl-localematcher@0.6.2':
     resolution: {integrity: sha512-XOMO2Hupl0wdd172Y06h6kLpBz6Dv+J4okPLl4LPtzbr8f66WbIoy4ev98EBuZ6ZK4h5ydTN6XneT4QVpD7cdA==}
 
-  '@hono/swagger-ui@0.6.1':
-    resolution: {integrity: sha512-sJTvldu1GPeEPfyeLG7gRj+W4vEuD+JDi+JjJ3TJs/DvMUtBLs0KJO5yokGegWWdy5qrbdnQGekbhgNRmPmYKQ==}
+  '@hono/swagger-ui@0.6.2':
+    resolution: {integrity: sha512-EDLlBS+LwpAhhh5K45YH85Yyk9GJuD2E7rKdjTZsBObksXaBz+8jPsen5XZqOS9unw6H1CDq0LKzp0c51K6lsA==}
     peerDependencies:
       hono: '>=4.0.0'
 
@@ -4666,7 +4666,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@hono/swagger-ui@0.6.1(hono@4.13.13)':
+  '@hono/swagger-ui@0.6.2(hono@4.13.13)':
     dependencies:
       hono: 4.13.13
 
