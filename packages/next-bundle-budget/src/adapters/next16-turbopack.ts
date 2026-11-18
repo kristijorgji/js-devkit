@@ -249,7 +249,10 @@ function listPageOwnedChunks(distDir: string): PageOwnedChunks[] {
     const pageEntries = readBuildManifest(distDir)?.pages ?? {};
     // Pages-router Turbopack still writes route-bundle-stats.json, but those
     // firstLoadChunkPaths are shared + page. Prefer build-manifest `pages`.
-    if (Array.isArray(pageEntries['/_app'])) {
+    // App Router Next 16 still emits `pages['/_app']` as an empty array; that
+    // is not a pages-router graph, so keep using route-bundle-stats.
+    const hasPagesRouterEntries = Object.keys(pageEntries).some((key) => !SKIPPED_PAGE_KEYS.has(key));
+    if (Array.isArray(pageEntries['/_app']) && hasPagesRouterEntries) {
         return listPageOwnedChunksFromPagesManifest(distDir);
     }
     return listPageOwnedChunksFromStats(distDir);

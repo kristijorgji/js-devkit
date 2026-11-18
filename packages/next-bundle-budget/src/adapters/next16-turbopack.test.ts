@@ -21,6 +21,7 @@ describe('next16TurbopackAdapter', () => {
         expect(posts?.chunkPaths?.some((chunkPath) => chunkPath.includes('turbopack-'))).toBe(false);
         expect(home?.chunkPaths).not.toContain('static/chunks/aaaa1111.js');
         expect(home?.chunkPaths?.some((chunkPath) => chunkPath.includes('turbopack-'))).toBe(false);
+        expect(pages.map((page) => page.normalizedPath)).toEqual(['/[locale]', '/[locale]/posts']);
     });
 
     it('reads pages-router chunks from build-manifest.json even when route-bundle-stats.json lists first-load files', () => {

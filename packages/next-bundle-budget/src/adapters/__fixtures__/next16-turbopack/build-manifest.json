@@ -1,4 +1,5 @@
 {
   "polyfillFiles": ["static/chunks/polyfills-demo.js"],
-  "rootMainFiles": ["static/chunks/aaaa1111.js", "static/chunks/turbopack-runtime-demo.js"]
+  "rootMainFiles": ["static/chunks/aaaa1111.js", "static/chunks/turbopack-runtime-demo.js"],
+  "pages": { "/_app": [] }
 }
