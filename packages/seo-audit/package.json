@@ -46,7 +46,7 @@
   "dependencies": {
     "@kristijorgji/cli-kit": "workspace:^",
     "cheerio": "^1.0.0",
-    "commander": "^14.0.0",
+    "commander": "^15.1.0",
     "fast-xml-parser": "^5.11.2",
     "jiti": "^2",
     "robots-parser": "^3.0.1",
