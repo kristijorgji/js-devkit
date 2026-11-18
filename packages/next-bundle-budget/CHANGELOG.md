@@ -1,5 +1,11 @@
 # @kristijorgji/next-bundle-budget
 
+## 0.3.2
+
+### Patch Changes
+
+- [#271](https://github.com/kristijorgji/js-devkit/pull/271) [`a75a286`](https://github.com/kristijorgji/js-devkit/commit/a75a2862d40ecb3b566153ef85f86597b59c9cdf) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Subtract the shared Turbopack first-load shell from App Router page-owned chunks so size-limit route budgets do not include runtime/vendor.
+
 ## 0.3.1
 
 ### Patch Changes
