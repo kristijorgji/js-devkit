@@ -167,13 +167,53 @@ function listPageOwnedChunksFromStats(distDir: string): PageOwnedChunks[] {
         return [];
     }
 
-    return stats
+    const rows = stats
         .filter((row) => row.route && (row.firstLoadChunkPaths?.length ?? 0) > 0)
         .map((row) => ({
             manifestKey: row.route,
-            normalizedPath: normalizeAppPath(row.route),
-            chunkPaths: (row.firstLoadChunkPaths ?? []).map(stripDistPrefix),
-        }))
+            chunkPaths: [...new Set((row.firstLoadChunkPaths ?? []).map(stripDistPrefix))],
+        }));
+
+    const pageRows = rows.filter((row) => row.manifestKey !== '/_not-found');
+    const sharedBaseline = new Set(readSharedBaselineFromManifest(readBuildManifest(distDir)).map(stripDistPrefix));
+
+    let shellChunks: Set<string> | null = null;
+    for (const row of pageRows) {
+        const names = new Set(row.chunkPaths);
+        if (shellChunks === null) {
+            shellChunks = names;
+            continue;
+        }
+        const intersection = new Set<string>();
+        for (const chunk of shellChunks) {
+            if (names.has(chunk)) {
+                intersection.add(chunk);
+            }
+        }
+        shellChunks = intersection;
+    }
+
+    const excluded = new Set<string>(sharedBaseline);
+    if (shellChunks) {
+        for (const chunk of shellChunks) {
+            excluded.add(chunk);
+        }
+    }
+
+    return rows
+        .map((row) => {
+            const owned = row.chunkPaths.filter((chunkPath) => isClientJsChunk(chunkPath) && !excluded.has(chunkPath));
+            return {
+                manifestKey: row.manifestKey,
+                normalizedPath: normalizeAppPath(row.manifestKey),
+                chunkPaths:
+                    owned.length > 0
+                        ? owned
+                        : row.chunkPaths.filter(
+                              (chunkPath) => isClientJsChunk(chunkPath) && !sharedBaseline.has(chunkPath),
+                          ),
+            };
+        })
         .sort((left, right) => left.normalizedPath.localeCompare(right.normalizedPath));
 }
 

@@ -12,8 +12,15 @@ const pagesRouterFixture = join(fixtures, 'next16-turbopack-pages');
 describe('next16TurbopackAdapter', () => {
     it('reads per-route chunks from route-bundle-stats.json', () => {
         const pages = next16TurbopackAdapter.listPageOwnedChunks(appRouterFixture);
-        expect(pages[0]?.normalizedPath).toBe('/[locale]/posts');
-        expect(pages[0]?.chunkPaths).toContain('static/chunks/page-posts.js');
+        const posts = pages.find((page) => page.normalizedPath === '/[locale]/posts');
+        const home = pages.find((page) => page.normalizedPath === '/[locale]');
+
+        expect(posts?.chunkPaths).toEqual(['static/chunks/page-posts.js']);
+        expect(home?.chunkPaths).toEqual(['static/chunks/page-home.js']);
+        expect(posts?.chunkPaths).not.toContain('static/chunks/aaaa1111.js');
+        expect(posts?.chunkPaths?.some((chunkPath) => chunkPath.includes('turbopack-'))).toBe(false);
+        expect(home?.chunkPaths).not.toContain('static/chunks/aaaa1111.js');
+        expect(home?.chunkPaths?.some((chunkPath) => chunkPath.includes('turbopack-'))).toBe(false);
     });
 
     it('reads pages-router chunks from build-manifest.json even when route-bundle-stats.json lists first-load files', () => {
