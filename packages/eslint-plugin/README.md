@@ -102,6 +102,56 @@ warnings, or when splitting components/hooks, read and follow:
 - [.agents/skills/vendor/component-extraction/SKILL.md](../../.agents/skills/vendor/component-extraction/SKILL.md)
 ```
 
+### Size limits
+
+Line-count and cognitive-complexity limits for non-component TypeScript modules
+(`.ts`, `.mts`, `.cts`). Use this alongside `componentExtraction()` so `.tsx`
+components stay under the component rules and `.ts` modules stay under these:
+
+```js
+import { DEFAULT_HOOK_FILES, DEFAULT_SIZE_LIMITS_IGNORES, sizeLimits } from '@kristijorgji/eslint-plugin';
+import path from 'node:path';
+
+export default [
+  ...sizeLimits({
+    severity: 'error',
+    fileMaxLines: 300,
+    functionMaxLines: 80,
+    cognitiveComplexity: 20,
+    baselineFile: path.join(import.meta.dirname, 'size-limits.baseline.json'),
+    ignores: DEFAULT_SIZE_LIMITS_IGNORES,
+    functionIgnores: DEFAULT_HOOK_FILES,
+  }),
+];
+```
+
+| Option | Default | Purpose |
+| --- | --- | --- |
+| `severity` | `'error'` | `'warn'` or `'error'` |
+| `files` | `**/*.{ts,mts,cts}` | Which files to check |
+| `ignores` | tests, stories, `*.d.ts`, fixture folders | Replaces the default ignore list when set |
+| `fileMaxLines` | `300` | `max-lines` (blank lines and comments skipped) |
+| `functionMaxLines` | `80` | `max-lines-per-function` |
+| `cognitiveComplexity` | `20` | `sonarjs/cognitive-complexity`; `false` disables it |
+| `functionIgnores` | `[]` | Extra globs excluded from the function rule only (for example hook files) |
+| `sonarjsPlugin` | unset | Register `sonarjs` on the complexity block; otherwise another config must register it |
+| `baseline` / `baselineFile` | none | Frozen per-file exemption list |
+
+The exemption list is a JSON object keyed by paths relative to the ESLint config
+directory. Each value is a map of rule id to the current (integer) measurement.
+A file in the list may not grow: ESLint uses `max(limit, baselineValue)` for
+that file. Values may only shrink. New oversized files must be refactored, not
+added to the list.
+
+Set `KJ_SIZE_LIMITS_IGNORE_BASELINE=1` while generating the list so the
+exemption-list blocks do not hide the real measurements.
+
+#### Bundled agent skill
+
+This package ships `skills/size-limits/`. Sync it into the consuming project's
+`.agents/skills/` after install (for example
+`.agents/skills/vendor/size-limits/`).
+
 ### `no-barrel`
 
 `kj/no-barrel` is opt-in and requires two options, since it targets a specific

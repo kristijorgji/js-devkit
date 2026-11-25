@@ -6,6 +6,7 @@ export { plugin };
 export * from './configs/recommended.js';
 export * from './configs/typed.js';
 export * from './configs/component-extraction.js';
+export * from './configs/size-limits.js';
 
 export * from './selectors/object-literal-typing.js';
 export * from './selectors/mock-body-satisfies.js';

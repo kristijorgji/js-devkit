@@ -1,0 +1,7 @@
+{
+    "name": "@fx/shared",
+    "exports": {
+        "./*": "./src/*/index.ts",
+        "./direct": "./src/direct.ts"
+    }
+}

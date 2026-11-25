@@ -26,7 +26,8 @@ This scans your test files for `vi.mock(...)` / `jest.mock(...)` calls, groups o
 kj-analyze <command> [options]
 
 Commands:
-  test-mocks   Find near-duplicate vi.mock/jest.mock factories
+  test-mocks      Find near-duplicate vi.mock/jest.mock factories
+  size-baseline   Generate or check frozen size-limits exemption lists
 
 Options for test-mocks:
   --root <path>
@@ -53,6 +54,63 @@ Options for test-mocks:
 | `--help` | Print usage and exit. | |
 
 When `--scan` is omitted and no config file specifies `scanPaths`, `kj-analyze` looks for a `pnpm-workspace.yaml` at the repo root. If it declares workspace packages, it scans for existing `apps/*/src` and `packages/*/src` directories. Otherwise it falls back to `src` if present, or scans nothing.
+
+### `size-baseline`
+
+Reads each configured package with the target repo's ESLint (so a linked
+js-devkit never uses its own ESLint) and writes a frozen per-file exemption
+list (`size-limits.baseline.json` by default). Values may only shrink.
+
+```bash
+npx kj-analyze size-baseline --allow-new   # initial adoption
+npx kj-analyze size-baseline               # shrink after refactors; refuse growth
+npx kj-analyze size-baseline --check       # CI: fail if the list is stale
+npx kj-analyze size-baseline --package apps/crawler
+```
+
+`--allow-new` is only for initial adoption. After that, added or increased
+entries fail with "new oversized code: refactor it instead of adding it to the
+baseline".
+
+Config (top-level key of `code-analysis.config.json`):
+
+```json
+{
+  "sizeBaseline": {
+    "baselineFile": "size-limits.baseline.json",
+    "jsonIndent": 2,
+    "packages": [
+      "packages/utils",
+      { "dir": "apps/backend", "lintPaths": ["src", "scripts", "db"] }
+    ]
+  }
+}
+```
+
+String packages default to `lintPaths: ["src"]`. The generator sets
+`KJ_SIZE_LIMITS_IGNORE_BASELINE=1` so exemption-list blocks do not hide the
+real measurements. Requires `@kristijorgji/eslint-plugin`'s `sizeLimits()` in
+each package ESLint config.
+
+### `shared-consumers`
+
+Counts the consumer workspaces of each file in a shared package, including
+indirect use through internal imports. A file passes with two or more
+consumers, or when a consumer is listed as `sharedConsumers` (for example
+`packages/ui`). Barrels are skipped.
+
+```bash
+npx kj-analyze shared-consumers
+npx kj-analyze shared-consumers --write-baseline
+npx kj-analyze shared-consumers --json
+```
+
+`--write-baseline` keeps existing reasons and stamps new entries with a TODO.
+After the first write, added or leftover entries fail the command until you
+move the file or document why it stays.
+
+This package ships `skills/shared-consumers/`. Sync it into the consuming
+project's `.agents/skills/` after install.
 
 ### Environment variables
 
