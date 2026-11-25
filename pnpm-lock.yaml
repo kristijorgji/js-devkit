@@ -360,8 +360,8 @@ importers:
         specifier: ^2
         version: 2.7.0
       robots-parser:
-        specifier: ^3.1.0
-        version: 3.1.0
+        specifier: ^3.1.1
+        version: 3.1.1
       xmllint-wasm:
         specifier: ^5.3.0
         version: 5.3.0(@types/node@26.6.6)
@@ -3340,8 +3340,8 @@ packages:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
-  robots-parser@3.1.0:
-    resolution: {integrity: sha512-plDSjaini00x5DdwQOfHVYmiMbnRjjq+4f866KF3LSKab4/WvzHtaKpso1oQKoB3qDT70knCq37XglSo6sm7cQ==}
+  robots-parser@3.1.1:
+    resolution: {integrity: sha512-ltsI9/0CiaaZpnJeLT4vwK86cW1AfSXoBgnQHIaCtBrg4K8UckV7HakNzWfG8UvT2hqwrLZ1YWilWMEiynBg6g==}
     engines: {node: '>=10.0.0'}
 
   rollup@4.68.8:
@@ -6541,7 +6541,7 @@ snapshots:
       lighthouse-stack-packs: 1.12.3
       open: 11.0.4
       puppeteer-core: 25.18.0
-      robots-parser: 3.1.0
+      robots-parser: 3.1.1
       speedline-core: 1.4.3
       third-party-web: 0.30.0
       tldts-icann: 7.5.4
@@ -7074,7 +7074,7 @@ snapshots:
 
   reusify@1.1.0: {}
 
-  robots-parser@3.1.0: {}
+  robots-parser@3.1.1: {}
 
   rollup@4.68.8:
     dependencies:
