@@ -1,0 +1,15 @@
+{
+    "sharedConsumers": {
+        "packages": [
+            {
+                "dir": "packages/shared",
+                "minConsumers": 2,
+                "sharedConsumers": ["packages/ui"],
+                "baselineFile": "packages/shared/shared-consumers.baseline.json"
+            }
+        ],
+        "consumers": [{ "dir": "apps/*" }, { "dir": "packages/*" }],
+        "ignoreDirectories": ["node_modules", "dist"],
+        "ignoreFilePatterns": ["\\.test\\."]
+    }
+}

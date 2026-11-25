@@ -22,7 +22,7 @@ const DEFAULT_COMPONENT_MAX_LINES = 70;
 const DEFAULT_FILE_MAX_LINES = 300;
 const DEFAULT_HOOK_MAX_LINES = 120;
 const DEFAULT_COMPONENT_FILES = ['**/*.tsx'];
-const DEFAULT_HOOK_FILES = ['**/use*.ts', '**/hooks/**/*.ts'];
+export const DEFAULT_HOOK_FILES = ['**/use*.ts', '**/hooks/**/*.ts'];
 const DEFAULT_IGNORES = ['**/*.test.tsx', '**/*.stories.tsx', '**/*.test.ts', '**/*.stories.ts'];
 
 /**

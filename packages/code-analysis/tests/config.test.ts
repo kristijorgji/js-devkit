@@ -5,7 +5,7 @@ import path from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { detectScanPaths } from '../src/lib/detect-scan-paths.js';
-import { loadConfigFile, resolveTestMocksConfig } from '../src/lib/config.js';
+import { loadConfigFile, resolveSizeBaselineConfig, resolveTestMocksConfig } from '../src/lib/config.js';
 
 function makeTempDir(prefix: string): string {
     return fs.mkdtempSync(path.join(os.tmpdir(), prefix));
@@ -176,5 +176,67 @@ describe('resolveTestMocksConfig precedence', () => {
         const resolved = resolveTestMocksConfig({ cwd: fixtureRoot, flags: { root: 'nested-repo' }, env: {} });
 
         expect(resolved.repoRoot).toBe(nestedRoot);
+    });
+});
+
+describe('resolveSizeBaselineConfig', () => {
+    let fixtureRoot = '';
+
+    afterEach(() => {
+        if (fixtureRoot) {
+            fs.rmSync(fixtureRoot, { recursive: true, force: true });
+            fixtureRoot = '';
+        }
+    });
+
+    it('throws when the sizeBaseline section is missing', () => {
+        fixtureRoot = makeTempDir('size-baseline-config-');
+        fs.writeFileSync(path.join(fixtureRoot, 'code-analysis.config.json'), JSON.stringify({ scanPaths: ['src'] }));
+
+        expect(() => resolveSizeBaselineConfig({ cwd: fixtureRoot, flags: {} })).toThrow(
+            'code-analysis.config.json: missing "sizeBaseline" section'
+        );
+    });
+
+    it('applies defaults and normalizes string packages', () => {
+        fixtureRoot = makeTempDir('size-baseline-config-');
+        fs.writeFileSync(
+            path.join(fixtureRoot, 'code-analysis.config.json'),
+            JSON.stringify({
+                sizeBaseline: {
+                    packages: ['packages/utils', { dir: 'apps/backend', lintPaths: ['src', 'db'] }],
+                },
+            })
+        );
+
+        const resolved = resolveSizeBaselineConfig({ cwd: fixtureRoot, flags: {} });
+
+        expect(resolved.baselineFile).toBe('size-limits.baseline.json');
+        expect(resolved.jsonIndent).toBe(2);
+        expect(resolved.packages).toEqual([
+            { dir: 'packages/utils', lintPaths: ['src'] },
+            { dir: 'apps/backend', lintPaths: ['src', 'db'] },
+        ]);
+    });
+
+    it('filters packages by --package dir', () => {
+        fixtureRoot = makeTempDir('size-baseline-config-');
+        fs.writeFileSync(
+            path.join(fixtureRoot, 'code-analysis.config.json'),
+            JSON.stringify({
+                sizeBaseline: {
+                    jsonIndent: 4,
+                    packages: ['apps/crawler', 'apps/backend'],
+                },
+            })
+        );
+
+        const resolved = resolveSizeBaselineConfig({
+            cwd: fixtureRoot,
+            flags: { packages: ['apps/crawler'] },
+        });
+
+        expect(resolved.jsonIndent).toBe(4);
+        expect(resolved.packages).toEqual([{ dir: 'apps/crawler', lintPaths: ['src'] }]);
     });
 });
