@@ -1,5 +1,11 @@
 # @kristijorgji/eslint-plugin
 
+## 0.3.0
+
+### Minor Changes
+
+- [#299](https://github.com/kristijorgji/js-devkit/pull/299) [`d2e92ef`](https://github.com/kristijorgji/js-devkit/commit/d2e92efe30ad72cea8b67745e14e96ee31af3aac) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Add sizeLimits() config factory with frozen per-file exemption list; export DEFAULT_HOOK_FILES.
+
 ## 0.2.0
 
 ### Minor Changes

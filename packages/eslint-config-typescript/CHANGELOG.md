@@ -1,5 +1,12 @@
 # @kristijorgji/eslint-config-typescript
 
+## 1.2.4
+
+### Patch Changes
+
+- Updated dependencies [[`d2e92ef`](https://github.com/kristijorgji/js-devkit/commit/d2e92efe30ad72cea8b67745e14e96ee31af3aac)]:
+  - @kristijorgji/eslint-plugin@0.3.0
+
 ## 1.2.3
 
 ### Patch Changes
