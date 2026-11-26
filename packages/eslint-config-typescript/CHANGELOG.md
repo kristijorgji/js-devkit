@@ -1,5 +1,11 @@
 # @kristijorgji/eslint-config-typescript
 
+## 2.0.0
+
+### Major Changes
+
+- [#301](https://github.com/kristijorgji/js-devkit/pull/301) [`256c38a`](https://github.com/kristijorgji/js-devkit/commit/256c38a482f7831ab8f5ba6a62c6ff98acaa73b7) Thanks [@kristijorgji](https://github.com/kristijorgji)! - Enable type-aware async-safety rules by default when `tsconfigRootDir` is set (`no-floating-promises`, `no-misused-promises`, `await-thenable`, `switch-exhaustiveness-check` with default-as-exhaustive). Configure with `asyncSafety` (`false` or per-rule object). `createReactConfig` defaults `jsxAttributes: false` so async JSX handlers are allowed.
+
 ## 1.2.4
 
 ### Patch Changes
