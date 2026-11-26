@@ -1,6 +1,7 @@
 import {
   createTypescriptConfig,
   defaultExplicitTypesOptions,
+  type AsyncSafetyOptions,
   type CreateTypescriptConfigOptions,
   type ExplicitTypesOptions,
 } from '@kristijorgji/eslint-config-typescript';
@@ -8,6 +9,16 @@ import type { ESLint, Linter } from 'eslint';
 
 import type { SortJsxPropsOptions } from './jsx-props.js';
 import { createSharedReactConfigs } from './shared.js';
+
+function reactAsyncSafety(setting?: boolean | AsyncSafetyOptions): false | AsyncSafetyOptions {
+  if (setting === false) {
+    return false;
+  }
+  if (setting === undefined || setting === true) {
+    return { jsxAttributes: false };
+  }
+  return { jsxAttributes: false, ...setting };
+}
 
 function isFunctionReturnTypeEnabled(setting?: boolean | ExplicitTypesOptions): boolean {
   if (setting === undefined || setting === false) {
@@ -172,6 +183,7 @@ export async function createReactConfig(
     ...createTypescriptConfig({
       ...tsOptions,
       tsconfigRootDir,
+      asyncSafety: reactAsyncSafety(tsOptions.asyncSafety),
     }),
     ...createSharedReactConfigs({ extractionIgnores, jsxProps }),
   ];

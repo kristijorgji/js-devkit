@@ -37,6 +37,7 @@ export default createTypescriptConfig({
 | `sortImports` | Options for `sort-imports`, shallow-merged over package defaults; `false` disables the rule |
 | `codeQuality` | Opt-in (`true` or `{ duplication?, unusedSymbols? }`). Enables the sonarjs in-file duplication subset, `unused-imports/no-unused-imports`, and `@typescript-eslint/no-unused-private-class-members`. Default off. |
 | `explicitTypes` | Opt-in (`true` or per-rule toggles). Enables `consistent-type-assertions`, `consistent-type-imports`, `explicit-module-boundary-types`, and `explicit-function-return-type`. Default off. For React apps, prefer `@kristijorgji/eslint-config-react-typescript`, which by default turns `explicit-function-return-type` off for `.tsx`/`.jsx` when that rule is enabled (`jsxExplicitFunctionReturnType: true` keeps it on). For non-React presets, pass `functionReturnType: false` or add a file-scoped override if you want the same relaxation. |
+| `asyncSafety` | Type-aware promise and switch safety. Default on when `tsconfigRootDir` is set. Enables `no-floating-promises`, `no-misused-promises`, `await-thenable`, and `switch-exhaustiveness-check` (a `default` branch counts as exhaustive). Pass `false` to disable the group, or an object (`{ floatingPromises?, misusedPromises?, jsxAttributes?, awaitThenable?, switchExhaustiveness? }`) to toggle single rules. |
 
 ### Migration from hand-rolled configs
 

@@ -105,6 +105,49 @@ describe('createReactConfig', () => {
     expect(ruleSeverity(tsxRules['@typescript-eslint/explicit-function-return-type'])).toBe(2);
   });
 
+  it('defaults no-misused-promises to checksVoidReturn.attributes false', async () => {
+    const overrideConfig = await createReactConfig({
+      variant: 'vite',
+      tsconfigRootDir: viteFixture,
+      storybook: false,
+      prettier: false,
+    });
+
+    const rules = await effectiveRules(overrideConfig, viteFixture, 'Sample.tsx');
+    const entry = rules['@typescript-eslint/no-misused-promises'];
+    expect(Array.isArray(entry) ? entry[1] : undefined).toEqual({
+      checksVoidReturn: { attributes: false },
+    });
+  });
+
+  it('asyncSafety { jsxAttributes: true } enables no-misused-promises without options', async () => {
+    const overrideConfig = await createReactConfig({
+      variant: 'vite',
+      tsconfigRootDir: viteFixture,
+      storybook: false,
+      prettier: false,
+      asyncSafety: { jsxAttributes: true },
+    });
+
+    const rules = await effectiveRules(overrideConfig, viteFixture, 'Sample.tsx');
+    const entry = rules['@typescript-eslint/no-misused-promises'];
+    expect(ruleSeverity(entry)).toBe(2);
+    expect(Array.isArray(entry) ? entry[1] : undefined).toBeUndefined();
+  });
+
+  it('asyncSafety false omits no-misused-promises', async () => {
+    const overrideConfig = await createReactConfig({
+      variant: 'vite',
+      tsconfigRootDir: viteFixture,
+      storybook: false,
+      prettier: false,
+      asyncSafety: false,
+    });
+
+    const rules = await effectiveRules(overrideConfig, viteFixture, 'Sample.tsx');
+    expect(rules['@typescript-eslint/no-misused-promises']).toBeUndefined();
+  });
+
   it('omitting explicitTypes leaves explicit-function-return-type unset', async () => {
     const overrideConfig = await createReactConfig({
       variant: 'vite',
