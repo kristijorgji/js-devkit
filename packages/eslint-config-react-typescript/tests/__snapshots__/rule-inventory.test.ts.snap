@@ -27,13 +27,16 @@ exports[`rule inventory snapshot > next variant with storybook false 1`] = `
     "@next/next/no-unwanted-polyfillio",
   ],
   "@typescript-eslint": [
+    "@typescript-eslint/await-thenable",
     "@typescript-eslint/ban-ts-comment",
     "@typescript-eslint/no-array-constructor",
     "@typescript-eslint/no-duplicate-enum-values",
     "@typescript-eslint/no-empty-object-type",
     "@typescript-eslint/no-explicit-any",
     "@typescript-eslint/no-extra-non-null-assertion",
+    "@typescript-eslint/no-floating-promises",
     "@typescript-eslint/no-misused-new",
+    "@typescript-eslint/no-misused-promises",
     "@typescript-eslint/no-namespace",
     "@typescript-eslint/no-non-null-asserted-optional-chain",
     "@typescript-eslint/no-require-imports",
@@ -47,6 +50,7 @@ exports[`rule inventory snapshot > next variant with storybook false 1`] = `
     "@typescript-eslint/no-wrapper-object-types",
     "@typescript-eslint/prefer-as-const",
     "@typescript-eslint/prefer-namespace-keyword",
+    "@typescript-eslint/switch-exhaustiveness-check",
     "@typescript-eslint/triple-slash-reference",
   ],
   "core": [
@@ -165,13 +169,16 @@ exports[`rule inventory snapshot > storybook true adds only storybook-prefixed r
 exports[`rule inventory snapshot > vite variant with storybook false 1`] = `
 {
   "@typescript-eslint": [
+    "@typescript-eslint/await-thenable",
     "@typescript-eslint/ban-ts-comment",
     "@typescript-eslint/no-array-constructor",
     "@typescript-eslint/no-duplicate-enum-values",
     "@typescript-eslint/no-empty-object-type",
     "@typescript-eslint/no-explicit-any",
     "@typescript-eslint/no-extra-non-null-assertion",
+    "@typescript-eslint/no-floating-promises",
     "@typescript-eslint/no-misused-new",
+    "@typescript-eslint/no-misused-promises",
     "@typescript-eslint/no-namespace",
     "@typescript-eslint/no-non-null-asserted-optional-chain",
     "@typescript-eslint/no-require-imports",
@@ -185,6 +192,7 @@ exports[`rule inventory snapshot > vite variant with storybook false 1`] = `
     "@typescript-eslint/no-wrapper-object-types",
     "@typescript-eslint/prefer-as-const",
     "@typescript-eslint/prefer-namespace-keyword",
+    "@typescript-eslint/switch-exhaustiveness-check",
     "@typescript-eslint/triple-slash-reference",
   ],
   "core": [

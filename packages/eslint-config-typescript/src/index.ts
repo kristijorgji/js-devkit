@@ -1,3 +1,9 @@
+export {
+  asyncSafetyRules,
+  defaultAsyncSafetyOptions,
+  switchExhaustivenessCheckOptions,
+  type AsyncSafetyOptions,
+} from './async-safety.js';
 export { baseRules, createBaseConfig, type BaseConfigOptions, type BaseRulesOptions } from './base.js';
 export {
   codeQualityPlugins,

@@ -53,6 +53,9 @@ By default, when `explicitTypes` enables `explicit-function-return-type`, this
 factory turns that rule **off** for `**/*.{tsx,jsx}` so JSX return types stay
 inferred while `.ts` helpers remain annotated. Pass
 `jsxExplicitFunctionReturnType: true` to keep the rule on for JSX files.
+`createReactConfig` also defaults `asyncSafety.jsxAttributes` to `false` so async
+JSX handlers (`onClick={async () => …}`) are allowed; pass
+`asyncSafety: { jsxAttributes: true }` to flag them.
 
 ### Shared React rules
 

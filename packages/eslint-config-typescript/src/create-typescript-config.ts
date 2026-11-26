@@ -2,6 +2,7 @@ import prettierConfig from 'eslint-config-prettier';
 import type { Linter } from 'eslint';
 import tseslint from 'typescript-eslint';
 
+import type { AsyncSafetyOptions } from './async-safety.js';
 import { createBaseConfig } from './base.js';
 import type { CodeQualityOptions } from './code-quality.js';
 import type { ExplicitTypesOptions } from './explicit-types.js';
@@ -40,6 +41,10 @@ export interface CreateTypescriptConfigOptions {
    * Opt-in consistent-type-* and explicit-* typing rules. Default off.
    */
   explicitTypes?: boolean | ExplicitTypesOptions;
+  /**
+   * Type-aware async-safety group, applied only when `tsconfigRootDir` is set. Default on.
+   */
+  asyncSafety?: boolean | AsyncSafetyOptions;
 }
 
 /**
@@ -69,7 +74,12 @@ export function createTypescriptConfig(options: CreateTypescriptConfigOptions = 
   ];
 
   if (options.tsconfigRootDir) {
-    configs.push(createTypedLintConfig({ tsconfigRootDir: options.tsconfigRootDir }));
+    configs.push(
+      createTypedLintConfig({
+        tsconfigRootDir: options.tsconfigRootDir,
+        asyncSafety: options.asyncSafety,
+      })
+    );
   }
 
   configs.push(prettierConfig);
